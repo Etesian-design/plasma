@@ -19,7 +19,7 @@ from pywayland.client import Display
 FakeInput = importlib.import_module('fake_input').OrgKdeKwinFakeInput
 
 KEYS = {'ESC': 1, 'TAB': 15, 'ENTER': 28, 'LEFTCTRL': 29, 'LEFTSHIFT': 42, 'LEFTALT': 56, 'SPACE': 57, 'LEFTMETA': 125,
-        'UP': 103, 'LEFT': 105, 'RIGHT': 106, 'DOWN': 108, 'N': 49, 'Z': 44, 'D': 32, 'T': 20, 'K': 37, 'O': 24, 'A': 30, '1': 2, '2': 3, '3': 4, '4': 5, '5': 6, '6': 7}
+        'UP': 103, 'LEFT': 105, 'RIGHT': 106, 'DOWN': 108, 'N': 49, 'Z': 44, 'D': 32, 'T': 20, 'K': 37, 'O': 24, 'A': 30, 'U': 22, 'L': 38, '1': 2, '2': 3, '3': 4, '4': 5, '5': 6, '6': 7}
 BTN_LEFT, WHEEL = 0x110, 0  # linux button code, wl_pointer.axis.vertical_scroll
 BTN_RIGHT = 0x111
 

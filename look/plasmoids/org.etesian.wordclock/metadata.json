@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.wordclock",
+    "Name": "Word clock (Belle)",
+    "Description": "Belle's word clock: the hour and the minutes in words, the date under them",
+    "Icon": "preferences-system-time",
+    "Category": "Date and Time",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

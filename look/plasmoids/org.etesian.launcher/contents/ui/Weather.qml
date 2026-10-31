@@ -35,14 +35,18 @@ Item {
         get("https://api.open-meteo.com/v1/forecast?latitude=" + cfg.weatherLat + "&longitude=" + cfg.weatherLon + "&current=temperature_2m,weather_code",
             j => { temp = j.current.temperature_2m; code = j.current.weather_code })
     }
-    function setCity(name) {
-        get("https://geocoding-api.open-meteo.com/v1/search?count=1&name=" + encodeURIComponent(name), j => {
-            if (!j.results || !j.results.length) return
-            const r = j.results[0]
-            cfg.setCity(r.name, r.latitude, r.longitude)
-            editing = false; refresh()
+    /** the place picker's matches (up to 10, as on the phone): name, "region, country", where it is */
+    property var matches: []
+    property string searched: ""
+    function search(name) {
+        const q = name.trim(); if (q.length < 2) { matches = []; searched = ""; return }
+        get(cfg.geocoder + "/v1/search?count=10&name=" + encodeURIComponent(q), j => {
+            if (field.text.trim() !== q) return // typed on since
+            searched = q
+            matches = (j.results || []).map(r => ({ name: r.name, detail: [r.admin1, r.country].filter(x => x).join(", "), lat: r.latitude, lon: r.longitude }))
         })
     }
+    function choose(m) { cfg.setCity(m.name, m.lat, m.lon); editing = false; matches = []; refresh() }
     Component.onCompleted: refresh()
     Connections { target: wx.cfg; function onWeatherLonChanged() { wx.refresh() } } // the shared settings load after start
     Timer { interval: 30 * 60 * 1000; running: !!wx.cfg.weatherCity; repeat: true; onTriggered: wx.refresh() }
@@ -74,7 +78,33 @@ Item {
         visible: wx.editing
         anchors.verticalCenter: parent.verticalCenter; width: 220
         placeholderText: "City for the weather"
-        onAccepted: wx.setCity(text)
-        Keys.onEscapePressed: wx.editing = false
+        onTextChanged: typing.restart()
+        onAccepted: if (wx.matches.length) wx.choose(wx.matches[0])
+        Keys.onEscapePressed: { wx.editing = false; wx.matches = [] }
+    }
+    Timer { id: typing; interval: 400; onTriggered: wx.search(field.text) }
+    // Belle Weather's place picker: the towns called that, with their region and country (two can share a name)
+    Rectangle {
+        visible: wx.editing && (wx.matches.length > 0 || wx.searched !== "")
+        anchors { top: field.bottom; topMargin: 4; right: field.right }
+        width: 280; height: picks.implicitHeight + 8; radius: 8; color: "#1B1B1B"; border.color: "#33FFFFFF"
+        Column {
+            id: picks
+            anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: 4 }
+            Text { visible: !wx.matches.length; text: "No places called “" + wx.searched + "”"; color: "#8C8C8C"; font.pixelSize: 13; leftPadding: 12; height: 36; verticalAlignment: Text.AlignVCenter }
+            Repeater {
+                model: wx.matches
+                delegate: MouseArea {
+                    width: picks.width; height: 44; hoverEnabled: true
+                    onClicked: wx.choose(modelData)
+                    Rectangle { anchors.fill: parent; color: parent.containsMouse ? "#334591FF" : "transparent" }
+                    Column {
+                        anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: 12 }
+                        Text { text: modelData.name; color: "white"; font.pixelSize: 14 }
+                        Text { text: modelData.detail; color: "#8C8C8C"; font.pixelSize: 12 }
+                    }
+                }
+            }
+        }
     }
 }

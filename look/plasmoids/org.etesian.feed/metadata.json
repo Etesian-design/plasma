@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.feed",
+    "Name": "Feeds (Belle)",
+    "Description": "Belle's RSS widget: the newest posts of your feeds (the ones in Events), newest first",
+    "Icon": "application-rss+xml",
+    "Category": "Online Services",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.flipclock",
+    "Name": "Flip clock (Belle)",
+    "Description": "Belle's flip clock: hours and minutes on two dark tiles, the date under the minutes",
+    "Icon": "preferences-system-time",
+    "Category": "Date and Time",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}
