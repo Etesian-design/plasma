@@ -10,3 +10,5 @@ find_package(KF6CoreAddons REQUIRED)
 add_library(org.etesian.decoration MODULE decoration.cpp appactions.cpp)
 target_link_libraries(org.etesian.decoration PRIVATE Qt6::Core Qt6::Gui Qt6::DBus KDecoration3::KDecoration KF6::CoreAddons)
 set_target_properties(org.etesian.decoration PROPERTIES PREFIX "")
+# The KDecoration version it is built against: the login script (env.sh) falls back to Aurorae when Plasma moves on.
+file(WRITE "${CMAKE_BINARY_DIR}/kdecoration-version" "${KDecoration3_VERSION}\n")
