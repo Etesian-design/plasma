@@ -92,6 +92,7 @@ Item {
                 RowLayout {
                     Layout.leftMargin: 22; Layout.rightMargin: 18; Layout.topMargin: 6; Layout.bottomMargin: 14
                     spacing: 18
+                    z: 1 // the place picker's list opens over the sections below
                     Text { text: Qt.formatTime(panel.now, "hh:mm"); color: "white"; font { pixelSize: 64; weight: Font.Light } }
                     Item { Layout.fillWidth: true }
                     Weather { cfg: settings }

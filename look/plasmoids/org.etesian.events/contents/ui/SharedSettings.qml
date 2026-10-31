@@ -9,9 +9,11 @@ QtObject {
     property real weatherLat: 0
     property real weatherLon: 0
     property var feeds: []
+    /** where towns are looked up (Open-Meteo's geocoding API; a self-hosted one, or the tests' local server) */
+    property string geocoder: "https://geocoding-api.open-meteo.com"
     property bool loaded: false
 
-    readonly property var keys: ["weatherCity", "weatherLat", "weatherLon", "feeds"]
+    readonly property var keys: ["weatherCity", "weatherLat", "weatherLon", "feeds", "geocoder"]
     function q(v) { return "'" + String(v).replace(/'/g, "'\\''") + "'" }
     function write(key, value) {
         exec.connectSource("kwriteconfig6 --file etesianrc --group Events --key " + key + " " + q(Array.isArray(value) ? value.join(",") : value) + " # " + Date.now())
@@ -30,6 +32,7 @@ QtObject {
                 const v = (data.stdout || "").trim()
                 if (m[1] === "feeds") { const f = v ? v.split(",") : []; if (f.join(",") !== set.feeds.join(",")) set.feeds = f }
                 else if (m[1] === "weatherCity") set.weatherCity = v
+                else if (m[1] === "geocoder") { if (v) set.geocoder = v }
                 else set[m[1]] = parseFloat(v) || 0
                 set.loaded = true
             }

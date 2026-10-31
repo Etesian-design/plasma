@@ -10,7 +10,7 @@ data="${XDG_DATA_HOME:-$HOME/.local/share}"
 . "$here/settings.sh"
 backup="$data/etesian/backup"
 remove_files() {
-  rm -rf "$data/plasma/plasmoids/org.etesian.dock" "$data/plasma/plasmoids/org.etesian.appname" "$data/plasma/plasmoids/org.etesian.events" "$data/plasma/plasmoids/org.etesian.launcher" "$data/plasma/plasmoids/org.etesian.status" "$data/plasma/plasmoids/org.etesian.spotlight" "$data/kwin/scripts/etesian-snap" "$data/kwin/effects/etesian_windows" "$data/kwin/effects/etesian_snaplayouts" "$data/kwin/tabbox/etesian_carousel" "$data/aurorae/themes/Etesian" "$data/plasma/desktoptheme/etesian" "$data/plasma/look-and-feel/org.etesian.desktop" "$data/icons/Etesian" "$HOME/.local/lib/qt6/plugins/org.kde.kdecoration3/org.etesian.decoration.so" "$HOME/.config/plasma-workspace/env/etesian-plugins.sh" "$data/sounds/Etesian" "$data/icons/Etesian-cursors" "$data/wallpapers/Etesian"
+  rm -rf "$data/plasma/plasmoids/org.etesian."* "$data/kwin/scripts/etesian-snap" "$data/kwin/effects/etesian_windows" "$data/kwin/effects/etesian_snaplayouts" "$data/kwin/tabbox/etesian_carousel" "$data/aurorae/themes/Etesian" "$data/plasma/desktoptheme/etesian" "$data/plasma/look-and-feel/org.etesian.desktop" "$data/icons/Etesian" "$HOME/.local/lib/qt6/plugins/org.kde.kdecoration3/org.etesian.decoration.so" "$HOME/.config/plasma-workspace/env/etesian-plugins.sh" "$data/sounds/Etesian" "$data/icons/Etesian-cursors" "$data/wallpapers/Etesian"
   rm -f "$data/color-schemes/Etesian.colors" "$data/color-schemes/EtesianDark.colors"
 }
 
