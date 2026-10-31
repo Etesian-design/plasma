@@ -2,41 +2,10 @@
 // Storybook designs share one source. Usage: node --experimental-strip-types scripts/colors.ts [path/to/design-repo]
 // Writes look/colors/Etesian.colors (hybrid: light pages, dark chrome, like the phone) and look/colors/EtesianDark.colors.
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { designRepo } from './design.ts'
+import { type RGB, type Tokens, root, hybrid, dark, rgb, over, mix } from './tokens.ts'
 
-const design = designRepo(process.argv[2])
-const css = readFileSync(join(design, 'src/styles/tokens.css'), 'utf8')
-
-type Tokens = Record<string, string>
-/** The custom properties of the first rule whose selector list contains `selector` (later duplicates win, as in CSS). */
-function block(selector: string): Tokens {
-  const at = css.indexOf(selector)
-  if (at < 0) throw new Error(`no rule for ${selector} in tokens.css`)
-  const body = css.slice(css.indexOf('{', at) + 1, css.indexOf('}', at))
-  const out: Tokens = {}
-  for (const m of body.matchAll(/--hd-([\w-]+):\s*([^;]+);/g)) out[m[1]] = m[2].trim()
-  return out
-}
-const root = block(':root {')
-const hybrid = { ...root, ...block('[data-hd-mode="hybrid"]') }
-const dark = { ...root, ...block('[data-hd-mode="dark"]') }
-
-type RGB = [number, number, number]
-function rgb(v: string): RGB {
-  const hex = v.match(/^#([0-9a-f]{6})$/i)
-  if (hex) return [0, 2, 4].map((i) => parseInt(hex[1].slice(i, i + 2), 16)) as RGB
-  throw new Error(`not a #rrggbb colour: ${v}`)
-}
-/** `fg` at `alpha` over `bg`, for the translucent tokens (dividers, pressed). */
-function over(bg: RGB, v: string): RGB {
-  const m = v.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/)
-  if (!m) return rgb(v)
-  const a = Number(m[4])
-  return bg.map((b, i) => Math.round(Number(m[i + 1]) * a + b * (1 - a))) as RGB
-}
-const mix = (a: RGB, b: RGB, t: number) => a.map((x, i) => Math.round(x * (1 - t) + b[i] * t)) as RGB
 const kde = (c: RGB) => c.join(',')
 
 const accent = rgb(root['color-accent-default'])

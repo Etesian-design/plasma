@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.mail",
+    "Name": "Mail (Belle)",
+    "Description": "Belle's Mail widget: the newest mails in your inbox and how many are unread, from KMail",
+    "Icon": "internet-mail",
+    "Category": "Online Services",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

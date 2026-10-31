@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name=""/>
+  <group name="General">
+    <!-- where the mails come from: kmail (Akonadi); more sources later -->
+    <entry name="source" type="String"><default>kmail</default></entry>
+    <!-- one account (an Akonadi resource id), or empty for every inbox -->
+    <entry name="account" type="String"><default></default></entry>
+  </group>
+</kcfg>

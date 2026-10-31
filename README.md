@@ -48,6 +48,12 @@ behaviour. Supported: Plasma 6.6 (Kubuntu 26.04 LTS) and newer; every change is 
 - **Snapping**: dragging a window shows the numbered zones; release over one to snap. Dragging to the top edge drops the
   layout picker (six layouts); Super+Z opens it from the keyboard (1-6 for the layout, then the zone number).
   Super+Left / Super+Right move between three columns, Super+Up maximises, Super+Down floats the window again.
+- **Desktop widgets** (Belle, in Add Widgets): Flip clock, Word clock, Feeds (the Events feeds, newest posts first) and
+  Mail: the inbox's newest mails and the unread count in the blue header, a click opens the mail in KMail. Its settings
+  pick the source (KMail for now) and one account or every inbox. KMail's mails come through a small plugin (look/mail).
+- **Thunderbird**: an Etesian theme add-on (look/thunderbird), put into each Thunderbird profile; turn it on once under
+  Add-ons and Themes → Themes → Etesian (Thunderbird leaves an added theme off until then). It is Etesian Dark: Thunderbird darkens its panes under
+  any dark header, so the light pages of the KDE apps cannot be had there.
 
 Shortcuts take effect after logging out and back in once.
 
@@ -55,6 +61,7 @@ Shortcuts take effect after logging out and back in once.
 
 - Events: calendar entries come from Plasma's calendar plugins (holidays; KDE PIM calendars when installed).
 - Search finds apps and files (Plasma's runners); people and mail need KDE PIM.
+- Mail widget: KMail is the only source so far (the cloud-companion server and IMAP are to come).
 - Decorations: header actions only for the apps in `HeaderActionApps` (an app whose toolbar holds more than the common
   file and edit actions, like Dolphin's location bar, keeps its toolbar); no Back button for KDE apps.
 
@@ -66,7 +73,11 @@ throwaway Kubuntu 26.04 Docker container (look/decoration/build.sh). It goes to 
 env script adds that to the plugin path, so it is used from the next login. If neither works, the Aurorae header bar is
 used instead (`sudo apt install kwin-style-aurorae`; Arch: `aurorae`).
 
-The plugin is tied to the Plasma version it was built for (KDecoration, major.minor). After a Plasma update the login
+The mail plugin (the Mail widget's KMail source) is built the same way, here with the Akonadi headers (Kubuntu:
+`sudo apt install qt6-declarative-dev libakonadi-dev libakonadimime-dev libkmime-dev`) or in Docker
+(look/mail/build.sh), into ~/.local/lib/qt6/qml. Without it the Mail widget says so.
+
+The decoration plugin is tied to the Plasma version it was built for (KDecoration, major.minor). After a Plasma update the login
 script (look/decoration/env.sh) switches to the Aurorae header bar by itself, and back once `./install.sh` has rebuilt the
 plugin, so an update never leaves windows without a header.
 
@@ -91,13 +102,16 @@ The look is generated; edit the scripts, not the output:
     node --experimental-strip-types scripts/colors.ts [path/to/etesian-design]   # look/colors/
     node --experimental-strip-types scripts/aurorae.ts                           # look/aurorae/Etesian/
     node --experimental-strip-types scripts/icons.ts                             # look/icons/Etesian/
+    node --experimental-strip-types scripts/thunderbird.ts                       # look/thunderbird/manifest.json
     look/decoration/build.sh                                                     # look/decoration/build/
+    look/mail/build.sh                                                           # look/mail/build/
 
 Tests run Plasma in throwaway Docker containers with no screen, install the look into a fresh user, open real apps,
 check the settings and take screenshots (test/out/):
 
     test/all.sh               # every scenario on Plasma 6.6 (Kubuntu 26.04) and the latest Plasma (Arch)
     test/run.sh windows arch  # one scenario (test/scenarios/) on one distro
+    test/thunderbird/run.sh   # the Thunderbird theme in a throwaway Thunderbird (test/out-thunderbird/)
 
 Scenarios press keys through KWin's fake-input protocol (test/input.py), read KWin state with one-off KWin scripts
 (test/check.sh) and fail on any `FAIL` line. `test/lint.sh` catches QML that Plasma would refuse and checks that the

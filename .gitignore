@@ -2,3 +2,5 @@ test/out/
 test/keep/
 test/build-*/
 look/decoration/build/
+look/mail/build/
+test/out-thunderbird/

@@ -12,8 +12,10 @@ docker run --rm -v "$PWD/test/out:/out" "$image" sh -c 'rm -f /out/*' # files fr
 mkdir -p "test/build-$distro" && chmod 777 "test/build-$distro"
 docker run --rm -v "$PWD:/src:ro" -v "$PWD/test/build-$distro:/build" "$image" sh -c 'cmake -S /src/look/decoration -B /build -DCMAKE_BUILD_TYPE=Release >/dev/null && cmake --build /build >/dev/null' \
   || echo "warning: the decoration did not build on $distro"
+docker run --rm -v "$PWD:/src:ro" -v "$PWD/test/build-$distro:/build" "$image" sh -c 'cmake -S /src/look/mail -B /build/mail -DCMAKE_BUILD_TYPE=Release >/dev/null && cmake --build /build/mail >/dev/null' \
+  || echo "warning: the mail plugin did not build on $distro"
 node="${DRI_NODE:-/dev/dri/renderD128}"
 docker run --rm --name "etesian-plasma-$scenario" --device "$node" --group-add "$(stat -c %g "$node")" \
-  -v "$PWD:/src:ro" -v "$PWD/test/out:/out" -v "$PWD/test/build-$distro:/deco:ro" -e ETESIAN_DECORATION_SO=/deco/org.etesian.decoration.so -e KWIN_GDB -e DEBUGINFOD_URLS "$image" timeout 180 /src/test/session.sh "$scenario"
+  -v "$PWD:/src:ro" -v "$PWD/test/out:/out" -v "$PWD/test/build-$distro:/deco:ro" -e ETESIAN_DECORATION_SO=/deco/org.etesian.decoration.so -e ETESIAN_MAIL_DIR=/deco/mail/org/etesian/mail -e KWIN_GDB -e DEBUGINFOD_URLS "$image" timeout 180 /src/test/session.sh "$scenario"
 cat test/out/result.txt
 ! grep -q ^FAIL test/out/result.txt

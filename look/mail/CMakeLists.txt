@@ -1,0 +1,27 @@
+# The Etesian mail plugin (QML module org.etesian.mail): the mails behind the Belle Mail widget (org.etesian.mail plasmoid).
+# Sources: KMail (Akonadi). Built by ./build.sh (here or in a Kubuntu container); installed by ../../install.sh into
+# ~/.local/lib/qt6/qml/org/etesian/mail.
+cmake_minimum_required(VERSION 3.22)
+project(etesian-mail LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_AUTOMOC ON)
+find_package(ECM REQUIRED NO_MODULE)
+list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+find_package(Qt6 6.6 REQUIRED COMPONENTS Core Qml DBus)
+find_package(KPim6Akonadi REQUIRED)
+find_package(KPim6AkonadiMime REQUIRED)
+# KMime: part of KDE Frameworks from 2026 (KF6Mime, messages in std::shared_ptr), KPim6Mime before (QSharedPointer)
+find_package(KF6Mime QUIET)
+if(KF6Mime_FOUND)
+  set(KMIME KF6::Mime)
+else()
+  find_package(KPim6Mime REQUIRED)
+  set(KMIME KPim6::Mime)
+endif()
+qt_policy(SET QTP0001 NEW)
+qt_add_qml_module(etesianmail URI org.etesian.mail VERSION 1.0 PLUGIN_TARGET etesianmail NO_GENERATE_PLUGIN_SOURCE
+  CLASS_NAME EtesianMailPlugin SOURCES plugin.cpp kmailinbox.cpp kmailinbox.h OUTPUT_DIRECTORY org/etesian/mail)
+target_link_libraries(etesianmail PRIVATE Qt6::Core Qt6::Qml Qt6::DBus KPim6::AkonadiCore KPim6::AkonadiMime ${KMIME})
+if(KF6Mime_FOUND)
+  target_compile_definitions(etesianmail PRIVATE KMIME_STD_SHARED_PTR)
+endif()
