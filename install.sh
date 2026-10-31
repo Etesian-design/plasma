@@ -2,10 +2,18 @@
 # Installs the Etesian look for the current user only (~/.local/share and ~/.config); nothing system-wide, no sudo.
 #   ./install.sh           colours, Plasma style, window decoration and font; your panels stay as they are
 #   ./install.sh --layout  also replaces your panels with the Etesian menu bar and dock (Plasma must be running)
-# Run it again after pulling to update. ./uninstall.sh puts Breeze back.
+# Run it again after pulling to update. ./uninstall.sh puts your own settings and panels back.
 set -e
 here="$(cd "$(dirname "$0")" && pwd)"
 data="${XDG_DATA_HOME:-$HOME/.local/share}"
+# Before the first change, keep the user's own settings so ./uninstall.sh can put them back exactly (theme, shortcuts,
+# panels). Each file is recorded once: a copy, or a .absent marker when it did not exist; later runs never overwrite it.
+. "$here/settings.sh"
+backup="$data/etesian/backup"; mkdir -p "$backup"
+for f in "${etesian_settings[@]}"; do
+  { [ -e "$backup/$f" ] || [ -e "$backup/$f.absent" ]; } && continue
+  if [ -f "$config/$f" ]; then cp "$config/$f" "$backup/$f"; else : >"$backup/$f.absent"; fi
+done
 mkdir -p "$data/color-schemes" "$data/aurorae/themes" "$data/plasma/desktoptheme" "$data/plasma/look-and-feel"
 cp "$here"/look/colors/*.colors "$data/color-schemes/"
 cp -r "$here/look/aurorae/Etesian" "$data/aurorae/themes/"

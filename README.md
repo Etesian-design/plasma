@@ -68,7 +68,11 @@ used instead (`sudo apt install kwin-style-aurorae`; Arch: `aurorae`).
 
     ./install.sh            # look and behaviour; your panels stay as they are
     ./install.sh --layout   # also replaces your panels with the Etesian menu bar and dock
-    ./uninstall.sh          # back to Breeze (add --layout to reset the panels too)
+    ./uninstall.sh          # your own settings and panels back, as before the first install
+    ./uninstall.sh --breeze # Breeze instead (add --layout for Plasma's default panels)
+
+The first install keeps a copy of the settings it changes (~/.local/share/etesian/backup); running it again to update never
+replaces that copy, and uninstalling puts it back and deletes it.
 
 The login screen (SDDM) is system-wide, so it is a separate step with sudo: the Desktop v2 background, the time in the
 light face, the user as a squircle, a password pill, session and power squircles (look/sddm/etesian, Fira Sans).

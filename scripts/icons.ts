@@ -4,12 +4,13 @@
 //   gradient and a short cast shadow), the glyph at half the tile;
 // - symbolic icons (actions, status): the line glyph under the freedesktop names, recoloured by Plasma (ColorScheme-Text).
 // Everything else comes from Breeze (Inherits).
-// Usage: node --experimental-strip-types scripts/icons.ts [path/to/etesian-design]  ->  look/icons/Etesian/
+// Usage: node --experimental-strip-types scripts/icons.ts [path/to/design-repo]  ->  look/icons/Etesian/
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
+import { designRepo } from './design.ts'
 
-const design = process.argv[2] ?? join(import.meta.dirname, '../../etesian-design')
+const design = designRepo(process.argv[2])
 const out = join(import.meta.dirname, '../look/icons/Etesian')
 
 // The design's glyphs: `name: 'path'` (stroke-only, 24 px grid, 2 px round strokes).

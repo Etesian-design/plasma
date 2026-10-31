@@ -1,11 +1,12 @@
 // Generates the Plasma colour schemes from the etesian-design tokens (src/styles/tokens.css), so the desktop and the
-// Storybook designs share one source. Usage: node --experimental-strip-types scripts/colors.ts [path/to/etesian-design]
+// Storybook designs share one source. Usage: node --experimental-strip-types scripts/colors.ts [path/to/design-repo]
 // Writes look/colors/Etesian.colors (hybrid: light pages, dark chrome, like the phone) and look/colors/EtesianDark.colors.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
+import { designRepo } from './design.ts'
 
-const design = process.argv[2] ?? join(import.meta.dirname, '../../etesian-design')
+const design = designRepo(process.argv[2])
 const css = readFileSync(join(design, 'src/styles/tokens.css'), 'utf8')
 
 type Tokens = Record<string, string>
