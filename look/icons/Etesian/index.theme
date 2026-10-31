@@ -1,0 +1,27 @@
+[Icon Theme]
+Name=Etesian
+Comment=Lit squircle app icons and thin line symbols from the Etesian Design Language; everything else from Breeze
+Inherits=breeze-dark,breeze,hicolor
+DisplayDepth=32
+DesktopDefault=48
+ToolbarDefault=22
+MainToolbarDefault=22
+SmallDefault=16
+PanelDefault=48
+DialogDefault=32
+FollowsColorScheme=true
+Directories=apps/scalable,actions/symbolic
+
+[apps/scalable]
+Size=48
+MinSize=16
+MaxSize=512
+Context=Applications
+Type=Scalable
+
+[actions/symbolic]
+Size=24
+MinSize=16
+MaxSize=256
+Context=Actions
+Type=Scalable

@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.appname",
+    "Name": "Etesian app name",
+    "Description": "The focused app's name in bold at the start of the menu bar, before its menus",
+    "Icon": "application-menu",
+    "Category": "Windows and Tasks",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

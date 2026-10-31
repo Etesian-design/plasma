@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "KWin/Effect",
+  "KPlugin": {
+    "Id": "etesian_windows",
+    "Name": "Etesian Windows view",
+    "Description": "Super+Tab: the open windows as live cards, a carousel while Super is held; Super+wheel or a pinch zooms to 2, 3 or 4 per row and keeps the view open. Three-finger swipes minimise and switch.",
+    "Category": "Window Management",
+    "EnabledByDefault": false,
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API": "declarativescript"
+}

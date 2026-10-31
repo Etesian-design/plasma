@@ -1,0 +1,12 @@
+{
+    "KPlugin": {
+        "Id": "org.etesian.decoration",
+        "Name": "Etesian",
+        "Description": "The Etesian N9 header bar; a KDE app's toolbar actions sit in it"
+    },
+    "org.kde.kdecoration3": {
+        "blur": false,
+        "kcmodule": false,
+        "recommendedBorderSize": "None"
+    }
+}

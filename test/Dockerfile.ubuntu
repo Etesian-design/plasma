@@ -1,0 +1,12 @@
+# Plasma as on Kubuntu 26.04 (the minimum we support), run with no screen for tests. See README.md (Develop).
+FROM ubuntu:26.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends sddm cmake g++ make extra-cmake-modules qt6-base-dev libkdecorations3-dev libkf6coreaddons-dev \
+      kwin-wayland kwin-style-aurorae plasma-workspace plasma-pa plasma-nm bluedevil powerdevil pipewire pipewire-pulse wireplumber pulseaudio-utils plasma-desktop dolphin konsole kate systemsettings breeze-icon-theme breeze-cursor-theme \
+      dbus-x11 fonts-noto-core fonts-open-sans python3-dbus python3-pil python3-pywayland python3-cffi-backend pkgconf libwayland-dev plasma-wayland-protocols libgl1-mesa-dri libegl-mesa0 mesa-libgallium libcap2-bin \
+    && apt-get clean
+# Ubuntu gives kwin_wayland CAP_SYS_NICE; a container cannot grant file capabilities to a normal user, so drop it (test image only).
+RUN setcap -r /usr/bin/kwin_wayland && useradd -m u
+USER u
+ENV SHELL=/bin/bash XDG_MENU_PREFIX=plasma- XDG_CURRENT_DESKTOP=KDE XDG_SESSION_TYPE=wayland KDE_FULL_SESSION=true KDE_SESSION_VERSION=6 LANG=C.UTF-8 XDG_RUNTIME_DIR=/tmp/xdg WAYLAND_DISPLAY=wayland-0 QT_QPA_PLATFORM=wayland
+WORKDIR /home/u

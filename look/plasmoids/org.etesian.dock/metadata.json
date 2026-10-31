@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.dock",
+    "Name": "Etesian dock",
+    "Description": "The Desktop v2 dock: launcher | pinned and running apps as squircles | recycle bin",
+    "Icon": "user-desktop",
+    "Category": "Windows and Tasks",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

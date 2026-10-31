@@ -1,0 +1,11 @@
+{
+  "KPackageStructure": "KWin/WindowSwitcher",
+  "KPlugin": {
+    "Id": "etesian_carousel",
+    "Name": "Etesian carousel",
+    "Description": "Super+Tab: the open windows as live cards, one large card at a time like the N9 Open apps; Super+wheel zooms to 2, 3 or 4 per row",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API": "declarativeappletscript"
+}

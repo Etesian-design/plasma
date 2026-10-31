@@ -1,0 +1,17 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.spotlight",
+    "Name": "Etesian spotlight",
+    "Description": "Super+Space: a compact search over the windows for apps, people, mail and files",
+    "Icon": "view-app-grid-symbolic",
+    "Category": "Application Launchers",
+    "License": "MIT",
+    "Authors": [
+      {
+        "Name": "Etesian"
+      }
+    ]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

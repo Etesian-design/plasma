@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.status",
+    "Name": "Etesian status menu",
+    "Description": "Wi-Fi, Bluetooth and battery in the menu bar; a click drops the N9 status menu: toggles, Silent, Focus, volume, brightness, battery",
+    "Icon": "network-wireless",
+    "Category": "System Information",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

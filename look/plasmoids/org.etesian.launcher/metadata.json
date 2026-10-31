@@ -1,0 +1,14 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.launcher",
+    "Name": "Etesian launcher",
+    "Description": "Tap Super: a compact search field and the app grid over the windows; typing filters, Enter opens the first",
+    "Icon": "view-app-grid-symbolic",
+    "Category": "Application Launchers",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "X-Plasma-Provides": ["org.kde.plasma.launchermenu"]
+}

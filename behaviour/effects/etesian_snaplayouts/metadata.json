@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "KWin/Effect",
+  "KPlugin": {
+    "Id": "etesian_snaplayouts",
+    "Name": "Etesian snap layouts",
+    "Description": "Super+Z: the snap-layout picker; 1-6 picks a layout, then a number its zone, or click a zone",
+    "Category": "Window Management",
+    "EnabledByDefault": false,
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API": "declarativescript"
+}

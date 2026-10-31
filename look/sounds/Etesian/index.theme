@@ -1,0 +1,8 @@
+[Sound Theme]
+Name=Etesian
+Comment=Etesian desktop sounds (made from scratch)
+Inherits=freedesktop
+Directories=stereo
+
+[stereo]
+OutputProfile=stereo

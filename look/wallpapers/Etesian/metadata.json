@@ -1,0 +1,12 @@
+{
+ "KPlugin": {
+  "Id": "Etesian",
+  "Name": "Etesian",
+  "Authors": [
+   {
+    "Name": "Etesian"
+   }
+  ],
+  "License": "CC-BY-SA-4.0"
+ }
+}

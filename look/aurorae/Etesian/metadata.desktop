@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Etesian
+Comment=N9-style header bar: title on the left, squircle buttons
+X-KDE-PluginInfo-Name=Etesian
+X-KDE-PluginInfo-License=MIT
+X-KDE-PluginInfo-Category=
+X-Plasma-API=javascript
+X-KDE-ServiceTypes=KWin/Decoration

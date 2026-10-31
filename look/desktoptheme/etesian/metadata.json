@@ -1,0 +1,11 @@
+{
+  "KPlugin": {
+    "Id": "etesian",
+    "Name": "Etesian",
+    "Description": "Dark N9 overlay surfaces for panels, popups and the dock; parts not drawn here fall back to Breeze, recoloured",
+    "License": "MIT",
+    "Version": "0.1",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

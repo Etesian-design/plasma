@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="44">
+<linearGradient id="decoration-g" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A3A3A"/><stop offset="1" stop-color="#141414"/></linearGradient>
+  <path id="decoration-topleft" d="M0,8a8,8 0 0 1 8,-8v8Z" fill="url(#decoration-g)" transform="translate(0 0)"/>
+  <path id="decoration-top" d="M0,0h8v8h-8Z" fill="url(#decoration-g)" transform="translate(8 0)"/>
+  <path id="decoration-topright" d="M0,0a8,8 0 0 1 8,8h-8Z" fill="url(#decoration-g)" transform="translate(16 0)"/>
+  <path id="decoration-left" d="M0,8h8v36h-8Z" fill="url(#decoration-g)" transform="translate(0 0)"/>
+  <path id="decoration-center" d="M0,8h8v36h-8Z" fill="url(#decoration-g)" transform="translate(8 0)"/>
+  <path id="decoration-right" d="M0,8h8v36h-8Z" fill="url(#decoration-g)" transform="translate(16 0)"/>
+<linearGradient id="decoration-inactive-g" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4A4A4A"/><stop offset="1" stop-color="#2E2E2E"/></linearGradient>
+  <path id="decoration-inactive-topleft" d="M0,8a8,8 0 0 1 8,-8v8Z" fill="url(#decoration-inactive-g)" transform="translate(0 0)"/>
+  <path id="decoration-inactive-top" d="M0,0h8v8h-8Z" fill="url(#decoration-inactive-g)" transform="translate(8 0)"/>
+  <path id="decoration-inactive-topright" d="M0,0a8,8 0 0 1 8,8h-8Z" fill="url(#decoration-inactive-g)" transform="translate(16 0)"/>
+  <path id="decoration-inactive-left" d="M0,8h8v36h-8Z" fill="url(#decoration-inactive-g)" transform="translate(0 0)"/>
+  <path id="decoration-inactive-center" d="M0,8h8v36h-8Z" fill="url(#decoration-inactive-g)" transform="translate(8 0)"/>
+  <path id="decoration-inactive-right" d="M0,8h8v36h-8Z" fill="url(#decoration-inactive-g)" transform="translate(16 0)"/>
+</svg>

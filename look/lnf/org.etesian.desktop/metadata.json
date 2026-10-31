@@ -1,0 +1,12 @@
+{
+  "KPlugin": {
+    "Id": "org.etesian.desktop",
+    "Name": "Etesian",
+    "Description": "The Etesian desktop: N9 colours and header bars, a floating dock on the left, a global menu bar with the clock on the right",
+    "License": "MIT",
+    "Version": "0.1",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-APIVersion": "2",
+  "X-Plasma-MainScript": "defaults"
+}

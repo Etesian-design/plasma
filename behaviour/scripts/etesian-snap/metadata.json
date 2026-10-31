@@ -1,0 +1,17 @@
+{
+  "KPackageStructure": "KWin/Script",
+  "KPlugin": {
+    "Id": "etesian-snap",
+    "Name": "Etesian snapping",
+    "Description": "Snap layouts: drag a window onto a zone, drag it to the top edge or press Super+Z for the layout picker; Super+Left/Right moves between columns, Super+Up maximises, Super+Down floats it again",
+    "License": "MIT",
+    "Authors": [
+      {
+        "Name": "Etesian"
+      }
+    ],
+    "EnabledByDefault": true
+  },
+  "X-Plasma-API": "declarativescript",
+  "X-Plasma-MainScript": "ui/main.qml"
+}

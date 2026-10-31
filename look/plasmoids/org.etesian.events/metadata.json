@@ -1,0 +1,13 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.etesian.events",
+    "Name": "Etesian Events",
+    "Description": "The phone's Events view on the desktop (Super+N): date, time, notifications, the month on a click of the date",
+    "Icon": "preferences-desktop-notification-bell",
+    "Category": "Date and Time",
+    "License": "MIT",
+    "Authors": [{ "Name": "Etesian" }]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}
