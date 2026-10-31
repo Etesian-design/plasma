@@ -1,0 +1,9 @@
+# The latest Plasma (Arch ships each release within days), run with no screen for tests. See README.md (Develop).
+FROM archlinux:latest
+RUN pacman -Syu --noconfirm --needed kwin aurorae plasma-workspace plasma-desktop plasma-pa plasma-nm bluedevil powerdevil pipewire pipewire-pulse wireplumber libpulse systemsettings dolphin konsole kate breeze breeze-icons sddm cmake gcc make extra-cmake-modules kdecoration kcoreaddons qt6-base \
+      noto-fonts ttf-opensans python-dbus python-pillow python-pywayland pkgconf wayland plasma-wayland-protocols mesa libcap qt6-tools && pacman -Scc --noconfirm
+RUN (setcap -r /usr/bin/kwin_wayland || true) && useradd -m u
+USER u
+ENV SHELL=/bin/bash XDG_MENU_PREFIX=plasma- XDG_CURRENT_DESKTOP=KDE XDG_SESSION_TYPE=wayland KDE_FULL_SESSION=true KDE_SESSION_VERSION=6 LANG=C.UTF-8 \
+    XDG_RUNTIME_DIR=/tmp/xdg WAYLAND_DISPLAY=wayland-0 QT_QPA_PLATFORM=wayland
+WORKDIR /home/u

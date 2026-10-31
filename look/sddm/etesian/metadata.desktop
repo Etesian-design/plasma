@@ -1,0 +1,8 @@
+[SddmGreeterTheme]
+Name=Etesian
+Description=The Etesian login screen: the Desktop v2 background, the time in the light face, the user as a squircle
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+QtVersion=6

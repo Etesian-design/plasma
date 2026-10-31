@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0">
+  <kcfgfile name=""/>
+  <group name="General">
+    <entry name="launchers" type="StringList">
+      <default>applications:org.kde.dolphin.desktop,applications:org.kde.kate.desktop,applications:org.kde.konsole.desktop,applications:systemsettings.desktop</default>
+    </entry>
+    <entry name="iconSize" type="Int"><default>44</default></entry>
+    <!-- Edit dock (XDockSettings): every extra is opt-in -->
+    <entry name="previews" type="Bool"><default>false</default></entry>
+    <entry name="trash" type="Bool"><default>true</default></entry>
+    <entry name="clock" type="Bool"><default>false</default></entry>
+    <entry name="battery" type="Bool"><default>false</default></entry>
+    <!-- mirrors of the panel's own settings, which a widget cannot read: strip|panel, always|autohide|dodge -->
+    <entry name="dockStyle" type="String"><default>strip</default></entry>
+    <entry name="visibility" type="String"><default>always</default></entry>
+  </group>
+</kcfg>
