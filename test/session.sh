@@ -4,6 +4,7 @@
 set -e
 mkdir -p "$XDG_RUNTIME_DIR" && chmod 700 "$XDG_RUNTIME_DIR"
 eval "$(dbus-launch --sh-syntax)"
+[ -f "/src/test/before/$1.sh" ] && . "/src/test/before/$1.sh" # the user's own settings, before Etesian is installed
 /src/install.sh >/out/install-pre.log 2>&1 || true # config KWin reads at start (shortcuts)
 kbuildsycoca6 >/dev/null 2>&1
 for f in ~/.config/plasma-workspace/env/*.sh; do [ -f "$f" ] && . "$f"; done # what startplasma does at login (the decoration plugin path)
