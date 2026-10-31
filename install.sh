@@ -52,16 +52,27 @@ kwriteconfig6 --file kdeglobals --group Icons --key Theme Etesian
 # The window decoration: the native Etesian one (look/decoration: the header bar, with a KDE app's toolbar actions in it) when
 # it can be built (here, or in Docker); otherwise the Aurorae theme, which draws the same header bar without app actions.
 # The plugin lives in ~/.local/lib/qt6/plugins; Plasma's env script adds that to the plugin path at login.
+# A plugin built for another KDecoration (major.minor; after a Plasma update) is rebuilt, or not used.
 deco="${ETESIAN_DECORATION_SO:-$here/look/decoration/build/org.etesian.decoration.so}"
-[ -f "$deco" ] || "$here/look/decoration/build.sh" >/dev/null 2>&1 || true
+deco_version="$(dirname "$deco")/kdecoration-version"
+kdecoration_now=$(ls /usr/lib/x86_64-linux-gnu/libkdecorations3.so.*.*.* /usr/lib64/libkdecorations3.so.*.*.* /usr/lib/libkdecorations3.so.*.*.* 2>/dev/null | head -n 1 | sed 's/.*\.so\.//')
+deco_ok() {
+  [ -f "$deco" ] || return 1
+  [ -z "$kdecoration_now" ] && return 0 # cannot tell (unusual library path): trust the build
+  built=$(cat "$deco_version" 2>/dev/null); [ "${built%.*}" = "${kdecoration_now%.*}" ]
+}
+deco_ok || "$here/look/decoration/build.sh" >/dev/null 2>&1 || true
 plugins="$HOME/.local/lib/qt6/plugins"
-if [ -f "$deco" ]; then
+if deco_ok; then
   mkdir -p "$plugins/org.kde.kdecoration3" "$HOME/.config/plasma-workspace/env"
   # copied next to it, then renamed over it: KWin keeps the library it has loaded (a new file, not overwritten in place, which
   # would crash KWin), and the new one is used from the next login or decoration reload
   cp "$deco" "$plugins/org.kde.kdecoration3/.org.etesian.decoration.so.new"
   mv -f "$plugins/org.kde.kdecoration3/.org.etesian.decoration.so.new" "$plugins/org.kde.kdecoration3/org.etesian.decoration.so"
-  printf '# Etesian: user plugins (the window decoration)\nexport QT_PLUGIN_PATH="%s${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"\n' "$plugins" >"$HOME/.config/plasma-workspace/env/etesian-plugins.sh"
+  # the login script adds the plugin path and falls back to Aurorae if a Plasma update makes this build stale
+  cp "$here/look/decoration/env.sh" "$HOME/.config/plasma-workspace/env/etesian-plugins.sh"
+  mkdir -p "$data/etesian"; cp "$deco_version" "$data/etesian/decoration-version" 2>/dev/null || rm -f "$data/etesian/decoration-version"
+  rm -f "$data/etesian/decoration-fallback"
   kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key library org.etesian.decoration
   kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key theme --delete
   # KDE apps whose toolbar moves into the header (their own toolbar is hidden while the decoration shows it).

@@ -66,6 +66,10 @@ throwaway Kubuntu 26.04 Docker container (look/decoration/build.sh). It goes to 
 env script adds that to the plugin path, so it is used from the next login. If neither works, the Aurorae header bar is
 used instead (`sudo apt install kwin-style-aurorae`; Arch: `aurorae`).
 
+The plugin is tied to the Plasma version it was built for (KDecoration, major.minor). After a Plasma update the login
+script (look/decoration/env.sh) switches to the Aurorae header bar by itself, and back once `./install.sh` has rebuilt the
+plugin, so an update never leaves windows without a header.
+
     ./install.sh            # look and behaviour; your panels stay as they are
     ./install.sh --layout   # also replaces your panels with the Etesian menu bar and dock
     ./uninstall.sh          # your own settings and panels back, as before the first install

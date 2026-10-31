@@ -11,6 +11,6 @@ else
   docker run --rm -v "$here:/src" -w /src "${ETESIAN_BUILD_IMAGE:-ubuntu:26.04}" sh -c '
     apt-get update -qq >/dev/null && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq cmake g++ extra-cmake-modules qt6-base-dev libkdecorations3-dev libkf6coreaddons-dev >/dev/null &&
     cmake -S /src -B /tmp/b -DCMAKE_BUILD_TYPE=Release >/dev/null && cmake --build /tmp/b -j"$(nproc)" &&
-    mkdir -p /src/build && cp /tmp/b/org.etesian.decoration.so /src/build/ && chown -R '"$(id -u):$(id -g)"' /src/build'
+    mkdir -p /src/build && cp /tmp/b/org.etesian.decoration.so /tmp/b/kdecoration-version /src/build/ && chown -R '"$(id -u):$(id -g)"' /src/build'
 fi
 ls -l "$here/build/org.etesian.decoration.so"
