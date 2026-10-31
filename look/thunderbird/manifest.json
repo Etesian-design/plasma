@@ -1,0 +1,54 @@
+{
+  "manifest_version": 2,
+  "name": "Etesian",
+  "version": "1.0",
+  "description": "The Etesian look: the dark header bar and panes, with the Etesian blue.",
+  "author": "Etesian",
+  "homepage_url": "https://etesian-design.com",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "theme@etesian-design.com",
+      "strict_min_version": "128.0"
+    }
+  },
+  "theme": {
+    "colors": {
+      "frame": "rgb(21, 21, 21)",
+      "frame_inactive": "rgb(18, 18, 18)",
+      "tab_background_text": "rgb(255, 255, 255)",
+      "tab_text": "rgb(255, 255, 255)",
+      "tab_selected": "rgb(34, 34, 34)",
+      "tab_line": "rgb(69, 145, 255)",
+      "tab_loading": "rgb(69, 145, 255)",
+      "toolbar": "rgb(21, 21, 21)",
+      "toolbar_text": "rgb(255, 255, 255)",
+      "toolbar_top_separator": "rgb(21, 21, 21)",
+      "toolbar_bottom_separator": "rgb(21, 21, 21)",
+      "toolbar_field": "rgb(34, 34, 34)",
+      "toolbar_field_text": "rgb(255, 255, 255)",
+      "toolbar_field_border": "rgb(34, 34, 34)",
+      "toolbar_field_focus": "rgb(34, 34, 34)",
+      "toolbar_field_text_focus": "rgb(255, 255, 255)",
+      "toolbar_field_border_focus": "rgb(69, 145, 255)",
+      "toolbar_field_highlight": "rgb(69, 145, 255)",
+      "toolbar_field_highlight_text": "rgb(255, 255, 255)",
+      "button_background_hover": "rgba(255, 255, 255, 0.12)",
+      "button_background_active": "rgba(255, 255, 255, 0.2)",
+      "icons": "rgb(255, 255, 255)",
+      "icons_attention": "rgb(69, 145, 255)",
+      "sidebar": "rgb(22, 22, 22)",
+      "sidebar_text": "rgb(255, 255, 255)",
+      "sidebar_border": "rgb(59, 59, 59)",
+      "sidebar_highlight": "rgb(69, 145, 255)",
+      "sidebar_highlight_text": "rgb(255, 255, 255)",
+      "popup": "rgb(22, 22, 22)",
+      "popup_text": "rgb(255, 255, 255)",
+      "popup_border": "rgb(59, 59, 59)",
+      "popup_highlight": "rgb(69, 145, 255)",
+      "popup_highlight_text": "rgb(255, 255, 255)"
+    },
+    "properties": {
+      "color_scheme": "dark"
+    }
+  }
+}

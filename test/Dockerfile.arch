@@ -1,6 +1,6 @@
 # The latest Plasma (Arch ships each release within days), run with no screen for tests. See README.md (Develop).
 FROM archlinux:latest
-RUN pacman -Syu --noconfirm --needed kwin aurorae plasma-workspace plasma-desktop plasma-pa plasma-nm bluedevil powerdevil pipewire pipewire-pulse wireplumber libpulse systemsettings dolphin konsole kate breeze breeze-icons sddm cmake gcc make extra-cmake-modules kdecoration kcoreaddons qt6-base \
+RUN pacman -Syu --noconfirm --needed kwin aurorae plasma-workspace plasma-desktop plasma-pa plasma-nm bluedevil powerdevil pipewire pipewire-pulse wireplumber libpulse systemsettings dolphin konsole kate breeze breeze-icons sddm cmake gcc make extra-cmake-modules kdecoration kcoreaddons qt6-base qt6-declarative akonadi akonadi-mime kmime kdepim-runtime \
       noto-fonts ttf-opensans python-dbus python-pillow python-pywayland pkgconf wayland plasma-wayland-protocols mesa libcap qt6-tools && pacman -Scc --noconfirm
 RUN (setcap -r /usr/bin/kwin_wayland || true) && useradd -m u
 USER u

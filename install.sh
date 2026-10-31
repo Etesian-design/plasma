@@ -83,6 +83,27 @@ else
   kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key library org.kde.kwin.aurorae
   kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key theme __aurorae__svg__Etesian
 fi
+# Thunderbird: the Etesian theme add-on (look/thunderbird) in each Thunderbird profile, also the Flatpak and Snap ones. Thunderbird
+# leaves an added theme off until the user turns it on (Add-ons and Themes → Themes → Etesian), so nothing changes until then.
+for tb in "$HOME/.thunderbird" "$HOME/.var/app/org.mozilla.Thunderbird/.thunderbird" "$HOME/snap/thunderbird/common/.thunderbird"; do
+  [ -f "$tb/profiles.ini" ] || continue
+  sed -n 's/^Path=//p' "$tb/profiles.ini" | while read -r prof; do
+    case "$prof" in /*) dir="$prof" ;; *) dir="$tb/$prof" ;; esac
+    [ -d "$dir" ] && mkdir -p "$dir/extensions" && python3 "$here/look/thunderbird/pack.py" "$dir/extensions/theme@etesian-design.com.xpi" 2>/dev/null || true
+  done
+done
+# The mail plugin (look/mail): the KMail inboxes behind the Belle Mail widget, built here or in Docker when it is not built yet.
+# It lives in ~/.local/lib/qt6/qml; Plasma's env script adds that to the QML path at login. Without it the widget says so.
+mail="${ETESIAN_MAIL_DIR:-$here/look/mail/build/org/etesian/mail}"
+[ -f "$mail/qmldir" ] || "$here/look/mail/build.sh" >/dev/null 2>&1 || true
+if [ -f "$mail/qmldir" ]; then
+  qml="$HOME/.local/lib/qt6/qml/org/etesian"
+  mkdir -p "$qml" "$HOME/.config/plasma-workspace/env"
+  rm -rf "$qml/.mail.new" && cp -r "$mail" "$qml/.mail.new" && rm -rf "$qml/mail" && mv "$qml/.mail.new" "$qml/mail"
+  cp "$here/look/mail/env.sh" "$HOME/.config/plasma-workspace/env/etesian-qml.sh"
+else
+  echo "note: the mail plugin could not be built (needs cmake + the Akonadi development files, or Docker); the Mail widget cannot show KMail's mails."
+fi
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft M
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight IAX
 # The header bar is the only border (Desktop v2 windows have none); resizing still works from the invisible edges.
