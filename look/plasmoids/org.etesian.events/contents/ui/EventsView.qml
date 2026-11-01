@@ -102,11 +102,13 @@ Item {
 
                 SectionHeader { title: "Notifications" }
                 Text {
-                    visible: notes.count === 0
+                    // the drawn list's own count, so the text and the list can never disagree
+                    visible: noteList.count === 0
                     Layout.leftMargin: 16; Layout.topMargin: 4; Layout.bottomMargin: 6
                     text: "No notifications"; color: panel.fgSecondary; font.pixelSize: 14
                 }
                 Repeater {
+                    id: noteList
                     model: notes
                     delegate: FeedItem {
                         Layout.fillWidth: true
@@ -273,6 +275,7 @@ Item {
                 }
             }
         }
-        Rectangle { Layout.fillWidth: true; Layout.topMargin: 10; height: 1; color: panel.divider }
+        // no rule under the month: the Notifications header below draws the only line
+        Item { Layout.fillWidth: true; Layout.preferredHeight: 10 }
     }
 }

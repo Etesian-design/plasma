@@ -19,3 +19,7 @@ echo "ok   shared copies"
 # the squircle is the N9 superellipse n = 2.8 (every side curves); n = 4 (sqrt / ** 0.5) reads as a rounded square
 bad=$(grep -rlE "sqrt\(Math\.abs\((c|s|co|si|cos|sin)\)\)|(qPow|Math\.pow)\(q?[Aa]bs\(\w+\), 0\.5\)|abs\(\w+\)\) \*\* 0\.5" look scripts --include=*.qml --include=*.cpp --include=*.ts --include=*.js || true)
 [ -z "$bad" ] && echo "ok   squircle n = 2.8" || { echo "FAIL squircle drawn with n = 4 in: $bad"; exit 1; }
+# Events draws one line above each section: the SectionHeader's. A full-width divider Rectangle elsewhere doubled it under the
+# time and the month (reported twice).
+n=$(grep -c "color: panel.divider" "$p/org.etesian.events/contents/ui/EventsView.qml")
+[ "$n" = 1 ] && echo "ok   Events one rule per section" || { echo "FAIL Events: $n divider lines, want only the SectionHeader's"; exit 1; }

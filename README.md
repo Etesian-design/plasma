@@ -1,123 +1,141 @@
-# Etesian for KDE Plasma
+<p align="center">
+  <img src=".github/readme/windows-carousel.png" width="820" alt="Super+Tab: open windows as a carousel, one large card at a time">
+</p>
 
-The Etesian desktop (etesian-design, *Explorations / Desktop v2*) on KDE Plasma 6: the N9 look and, step by step, its
-behaviour. Supported: Plasma 6.6 (Kubuntu 26.04 LTS) and newer; every change is tested on 6.6 and on the latest Plasma.
+<h1 align="center">Etesian for KDE Plasma</h1>
 
-## What you get
+<p align="center">
+  <b>The Nokia N9's look and feel, on your Linux desktop.</b><br>
+  A global menu bar, a floating dock, the N9's carousel of open windows, and its Events view one keypress away.
+</p>
 
-- **Colours** generated from the etesian-design tokens: *Etesian* (light pages under dark chrome, like the phone) and
-  *Etesian Dark*. The accent is the Etesian blue, never taken from the wallpaper.
-- **Window decoration** (native, look/decoration): a 44 px N9 header bar, the app squircle and the title on the left in
-  the light face, then the app's actions, the app menu (…), a thin divider and minimise / maximise / close; every button
-  gets a squircle on hover (red for close); inactive windows show the header at half strength. No side or bottom borders.
-  KDE apps listed in `HeaderActionApps` under `[Etesian]` in kwinrc (default Kate and KWrite) get their toolbar's actions
-  (New, Open, Save, Undo, Redo, read from the menu the app exports) in the header and their own toolbars hidden: one row
-  of chrome. `HeaderActions=false` there gives every app its own toolbar back. Without a way to build the plugin, the
-  install falls back to an Aurorae theme with the same header bar and no app actions.
-- **Plasma style**: panels and popups use the dark overlay colours.
-- **Layout** (optional, `--layout`): the global menu bar on top (the focused app's name in bold, its menus, then the
-  Events bubble, tray, the status icons and "Fri 30 Oct 12:45" at the far right) and the floating dock on the left: the
-  Overview button (accent squircle) | separator | pinned and running apps as lit squircles in their icon's colour, a dot
-  for running and an accent dot for the active app | separator | recycle bin, always last.
-- **Dock**: hover a running app for a live preview of its window (scroll to cycle a group's windows); right-click for
-  edit mode (remove pins, drag the handle to another edge, the gear opens Style, Position, Size, Visibility, Widgets).
-- **Status menu** (the Wi-Fi, Bluetooth and battery icons): Wi-Fi, Bluetooth, Silent and Focus toggles, volume and
-  brightness, the battery and Settings. A part whose service is missing is left out.
-- **Icons**: lit squircle app icons and line symbols (scripts/icons.ts), Breeze for everything else.
-- **Font**: Open Sans (no Nokia fonts).
-- **Sounds, cursors, wallpaper, splash**, all made for Etesian with no Nokia material: glassy bell sounds (scripts/sounds.py),
-  SVG cursors with a squircle busy spinner (scripts/cursors.ts), the Desktop v2 background (scripts/wallpaper.py) and the
-  phone's boot screen as the splash (ETESIAN in Fira Sans Medium, SIL OFL).
-- **Windows view** (Super+Tab, a KWin effect): the carousel, one large live card with its neighbours at half strength.
-  Hold Super and tap Tab / Shift+Tab, release Super to switch. Super+wheel zooms to 2, 3 or 4 per row and locks the view
-  open as a task viewer (Tab, arrows, Enter, a click, Esc). Cards keep each window's shape; the menu bar and dock stay
-  on top. Alt+Tab keeps KWin's switcher, drawn as the same carousel.
-- **Touchpad**: three-finger pinch = Super+wheel (pinching in opens the viewer at 3 per row); three fingers sideways
-  minimise the window in front, and bring windows back once none is left; three fingers down close the window, only
-  with `SwipeDownClose=true` under `[Effect-etesian_windows]` in kwinrc (off by default).
-- **Overview** (tap Super, or the dock's first button), the main menu kept from Desktop v1: full screen under the menu
-  bar, slightly see-through with the windows blurred behind. The phone's Events view on the left, the open windows as live
-  pictures in the middle (a close squircle on hover), the apps on the right. Just start typing to search apps and files;
-  Tab moves between the columns, Enter opens, Ctrl+W closes a window, Esc or Super closes it.
-- **Spotlight** (Super+Space), added by Desktop v2 next to the Overview: a compact search field and app grid over the
-  windows; typing filters, Enter opens the first match, Esc closes.
-- **Events** (Super+N, or the bubble in the menu bar; also the Overview's left column): the day and date (a click unfolds
-  the month, days with entries dotted), the time with the weather (Open-Meteo; click to set the city), then
-  Notifications, Calendar (the picked day) and Feeds (RSS / Atom; paste an address to add one). The city and the feeds
-  are shared by the sidebar and the Overview (~/.config/etesianrc).
-- **Snapping**: dragging a window shows the numbered zones; release over one to snap. Dragging to the top edge drops the
-  layout picker (six layouts); Super+Z opens it from the keyboard (1-6 for the layout, then the zone number).
-  Super+Left / Super+Right move between three columns, Super+Up maximises, Super+Down floats the window again.
-- **Desktop widgets** (Belle, in Add Widgets): Flip clock, Word clock, Feeds (the Events feeds, newest posts first) and
-  Mail: the inbox's newest mails and the unread count in the blue header, a click opens the mail in KMail. Its settings
-  pick the source (KMail for now) and one account or every inbox. KMail's mails come through a small plugin (look/mail).
-- **Thunderbird**: an Etesian theme add-on (look/thunderbird), put into each Thunderbird profile; turn it on once under
-  Add-ons and Themes → Themes → Etesian (Thunderbird leaves an added theme off until then). It is Etesian Dark: Thunderbird darkens its panes under
-  any dark header, so the light pages of the KDE apps cannot be had there.
+<p align="center">
+  <a href="https://etesian-design.com/desktop">Try it in your browser</a> ·
+  <a href="https://etesian-design.com">Website</a> ·
+  <a href="https://github.com/etesian-design/design">Design</a> ·
+  <a href="https://github.com/etesian-design/android_vendor_etesian">Phone</a>
+</p>
 
-Shortcuts take effect after logging out and back in once.
+<p align="center">
+  <img alt="Licence: MIT" src="https://img.shields.io/badge/licence-MIT-4591FF">
+  <img alt="Plasma 6.6+" src="https://img.shields.io/badge/Plasma-6.6%2B-1D99F3">
+  <img alt="Status: in development" src="https://img.shields.io/badge/status-in%20development-EF5500">
+</p>
 
-### Not yet as designed
+---
 
-- Events: calendar entries come from Plasma's calendar plugins (holidays; KDE PIM calendars when installed).
-- Search finds apps and files (Plasma's runners); people and mail need KDE PIM.
-- Mail widget: KMail is the only source so far (the cloud-companion server and IMAP are to come).
-- Decorations: header actions only for the apps in `HeaderActionApps` (an app whose toolbar holds more than the common
-  file and edit actions, like Dolphin's location bar, keeps its toolbar); no Back button for KDE apps.
+Not a theme pack. Etesian changes how Plasma **works** as well as how it looks: the way you switch windows, snap them,
+find apps and catch up on what's new. It installs for your user only, needs no root, and one command puts everything
+back.
 
-## Install (current user only, no sudo)
+<table>
+  <tr>
+    <td><img src=".github/readme/overview.png" alt="The Overview: Events, open windows and apps"></td>
+    <td><img src=".github/readme/events-open.png" alt="Events: notifications, calendar and feeds"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Overview</b>: tap Super, start typing</td>
+    <td align="center"><b>Events</b>: notifications, calendar and feeds</td>
+  </tr>
+</table>
 
-The native decoration is built on install: with `cmake` and the KDecoration3 headers here (Kubuntu:
-`sudo apt install cmake g++ extra-cmake-modules qt6-base-dev libkdecorations3-dev libkf6coreaddons-dev`), otherwise in a
-throwaway Kubuntu 26.04 Docker container (look/decoration/build.sh). It goes to ~/.local/lib/qt6/plugins, and a Plasma
-env script adds that to the plugin path, so it is used from the next login. If neither works, the Aurorae header bar is
-used instead (`sudo apt install kwin-style-aurorae`; Arch: `aurorae`).
+## Highlights
 
-The mail plugin (the Mail widget's KMail source) is built the same way, here with the Akonadi headers (Kubuntu:
-`sudo apt install qt6-declarative-dev libakonadi-dev libakonadimime-dev libkmime-dev`) or in Docker
-(look/mail/build.sh), into ~/.local/lib/qt6/qml. Without it the Mail widget says so.
+- **Windows, the N9 way.** Super+Tab shows one large card at a time; scroll to see 2, 3 or 4 per row.
+- **Snapping that shows you where.** Drag a window and numbered zones appear. Drag it to the top for six layouts.
+- **One place for what's new.** Events gathers notifications, today's calendar, your RSS feeds and the weather.
+- **Window headers with the app's own actions.** Kate's New, Open and Save sit in the title bar, so a window has one
+  row of chrome.
+- **The whole look.** Colours, lit squircle icons, cursors, sounds, wallpaper, boot splash, login screen, and a
+  matching Thunderbird theme.
+- **Belle widgets** on the desktop: flip clock, word clock, feeds and mail.
 
-The decoration plugin is tied to the Plasma version it was built for (KDecoration, major.minor). After a Plasma update the login
-script (look/decoration/env.sh) switches to the Aurorae header bar by itself, and back once `./install.sh` has rebuilt the
-plugin, so an update never leaves windows without a header.
+## Install
 
-    ./install.sh            # look and behaviour; your panels stay as they are
-    ./install.sh --layout   # also replaces your panels with the Etesian menu bar and dock
-    ./uninstall.sh          # your own settings and panels back, as before the first install
-    ./uninstall.sh --breeze # Breeze instead (add --layout for Plasma's default panels)
+Plasma 6.6 (Kubuntu 26.04) or newer.
 
-The first install keeps a copy of the settings it changes (~/.local/share/etesian/backup); running it again to update never
-replaces that copy, and uninstalling puts it back and deletes it.
+```sh
+./install.sh            # the look and behaviour; your panels stay as they are
+./install.sh --layout   # also the Etesian menu bar and dock
+```
 
-The login screen (SDDM) is system-wide, so it is a separate step with sudo: the Desktop v2 background, the time in the
-light face, the user as a squircle, a password pill, session and power squircles (look/sddm/etesian, Fira Sans).
+Log out and back in once. Changed your mind?
 
-    sddm-greeter-qt6 --test-mode --theme look/sddm/etesian   # preview, changes nothing
-    sudo ./install-sddm.sh                                   # use it (sudo ./install-sddm.sh --remove undoes it)
+```sh
+./uninstall.sh          # everything back as it was
+```
 
-## Develop
+<details>
+<summary>Building the native parts, the login screen, and going back to Breeze</summary>
 
-The look is generated; edit the scripts, not the output:
+The window header and the Mail widget's KMail support are small native plugins, built on install. With the build tools
+installed they build on your machine:
 
-    node --experimental-strip-types scripts/colors.ts [path/to/etesian-design]   # look/colors/
-    node --experimental-strip-types scripts/aurorae.ts                           # look/aurorae/Etesian/
-    node --experimental-strip-types scripts/icons.ts                             # look/icons/Etesian/
-    node --experimental-strip-types scripts/thunderbird.ts                       # look/thunderbird/manifest.json
-    look/decoration/build.sh                                                     # look/decoration/build/
-    look/mail/build.sh                                                           # look/mail/build/
+```sh
+sudo apt install cmake g++ extra-cmake-modules qt6-base-dev libkdecorations3-dev libkf6coreaddons-dev
+sudo apt install qt6-declarative-dev libakonadi-dev libakonadimime-dev libkmime-dev   # Mail widget
+```
 
-Tests run Plasma in throwaway Docker containers with no screen, install the look into a fresh user, open real apps,
-check the settings and take screenshots (test/out/):
+Otherwise they build in a throwaway Docker container. If neither works, you get a simpler header
+(`kwin-style-aurorae`). After a Plasma update, the simpler header is used until you run `./install.sh` again.
 
-    test/all.sh               # every scenario on Plasma 6.6 (Kubuntu 26.04) and the latest Plasma (Arch)
-    test/run.sh windows arch  # one scenario (test/scenarios/) on one distro
-    test/thunderbird/run.sh   # the Thunderbird theme in a throwaway Thunderbird (test/out-thunderbird/)
+The login screen is system-wide, so it's a separate step:
 
-Scenarios press keys through KWin's fake-input protocol (test/input.py), read KWin state with one-off KWin scripts
-(test/check.sh) and fail on any `FAIL` line. `test/lint.sh` catches QML that Plasma would refuse and checks that the
-files shared between widgets are identical copies. `KWIN_GDB=1 test/run.sh …` runs KWin under gdb, so a crash leaves
-its backtrace in test/out/kwin.log.
+```sh
+sddm-greeter-qt6 --test-mode --theme look/sddm/etesian   # preview
+sudo ./install-sddm.sh                                   # use it (--remove to undo)
+```
 
-They need a GPU render node (`/dev/dri/renderD128`, override with `DRI_NODE=`): without OpenGL KWin cannot take
-screenshots. The containers relax KWin's permission checks and drop a file capability from kwin_wayland; that is only
-inside the test images, never on the machine.
+`./uninstall.sh --breeze` switches to plain Breeze instead of your old settings; add `--layout` for Plasma's default
+panels.
+</details>
+
+## Keys
+
+| Keys | What they do |
+|---|---|
+| <kbd>Super</kbd> | Overview |
+| <kbd>Super</kbd> <kbd>Space</kbd> | Search |
+| <kbd>Super</kbd> <kbd>N</kbd> | Events |
+| <kbd>Super</kbd> <kbd>Tab</kbd> | Open windows |
+| <kbd>Super</kbd> <kbd>Z</kbd> | Snap layouts |
+| <kbd>Super</kbd> <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Move between columns, maximise, float |
+
+On a touchpad: pinch with three fingers to zoom the windows view, swipe sideways with three fingers to minimise.
+
+<details>
+<summary>Settings and what isn't finished</summary>
+
+In `~/.config/kwinrc`:
+
+- `[Etesian] HeaderActionApps` lists the apps whose toolbar moves into the header (default: Kate, KWrite);
+  `HeaderActions=false` turns it off.
+- `[Effect-etesian_windows] SwipeDownClose=true` lets a three-finger swipe down close a window.
+
+Not finished yet:
+
+- Your own calendars, and people and mail in search, need KDE PIM.
+- The Mail widget reads KMail only.
+- Only some apps get their actions in the header, and KDE apps have no Back button.
+</details>
+
+## Contributing
+
+The colours, icons and themes are generated by `scripts/*.ts`. Edit those scripts, not what they generate in `look/`.
+
+Every change is tested on real Plasma sessions in throwaway Docker containers: on 6.6 and on the latest Plasma.
+Nothing is installed on your machine.
+
+```sh
+test/all.sh               # everything
+test/run.sh windows arch  # one scenario on one distro
+test/lint.sh              # quick QML checks, no Docker
+```
+
+The tests need a GPU render node (`/dev/dri/renderD128`, or set `DRI_NODE`).
+
+## Licence
+
+MIT. Fira Sans (splash and login) is under the SIL OFL. No Nokia material.
+
+Etesian is an independent project and isn't affiliated with Nokia.
