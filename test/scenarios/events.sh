@@ -19,6 +19,12 @@ kwriteconfig6 --file etesianrc --group Events --key feeds "http://127.0.0.1:6199
 keys "sleep 0.5" "shot events-bar"
 keys "down LEFTMETA" "tap N" "up LEFTMETA" "sleep 1.5" "shot events-open"
 keys "sleep 1" "shot events-open"
+# Right under the Notifications header comes the notification's blue icon, not a grey "No notifications" line.
+expect "no 'No notifications' over a notification" "$(python3 -c '
+from PIL import Image
+im = Image.open("/out/events-open.png").convert("RGB")
+blue = sum(1 for x in range(1145, 1189) for y in range(240, 256) if (lambda p: p[2] > 150 and p[2] - p[0] > 60)(im.getpixel((x, y))))
+print("icon" if blue > 100 else "text")')" icon
 expect_has "Events fetched the feed" "$(cat /out/feed-server.log)" "GET /feed.xml"
 expect_has "and its picture" "$(cat /out/feed-server.log)" "GET /photo.png"
 keys "tap ESC" "sleep 0.5" "tap LEFTMETA" "sleep 2" "shot events-overview"
