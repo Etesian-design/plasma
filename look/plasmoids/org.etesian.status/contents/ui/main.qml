@@ -108,7 +108,7 @@ PlasmoidItem {
                     width: settingsRow.implicitWidth + 28; height: 34
                     hoverEnabled: true
                     onClicked: { root.expanded = false; root.start("systemsettings.desktop") }
-                    Rectangle { anchors.fill: parent; radius: 17; color: settingsButton.containsMouse ? Qt.rgba(1, 1, 1, 0.2) : Qt.rgba(1, 1, 1, 0.12) }
+                    SqField { anchors.fill: parent; rim: "transparent"; fill: settingsButton.containsMouse ? Qt.rgba(1, 1, 1, 0.2) : Qt.rgba(1, 1, 1, 0.12) }  // N9 button: squircle-half ends
                     Row {
                         id: settingsRow
                         anchors.centerIn: parent; spacing: 6

@@ -106,7 +106,7 @@ Item {
         id: pill
         property string text; property string icon; property bool accent: false
         width: r.implicitWidth + 28; height: 34; hoverEnabled: true
-        Rectangle { anchors.fill: parent; radius: 17; color: pill.accent ? set.accent : pill.containsMouse ? Qt.rgba(1, 1, 1, 0.2) : Qt.rgba(1, 1, 1, 0.12) }
+        SqField { anchors.fill: parent; rim: "transparent"; fill: pill.accent ? set.accent : pill.containsMouse ? Qt.rgba(1, 1, 1, 0.2) : Qt.rgba(1, 1, 1, 0.12) }  // N9 button: squircle-half ends
         Row { id: r; anchors.centerIn: parent; spacing: 6
             Kirigami.Icon { visible: pill.icon !== ""; width: 16; height: 16; source: pill.icon; color: "white"; isMask: true; anchors.verticalCenter: parent.verticalCenter }
             Text { text: pill.text; color: "white"; font { pixelSize: 13; bold: pill.accent } anchors.verticalCenter: parent.verticalCenter } }

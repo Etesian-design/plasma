@@ -99,6 +99,10 @@ PlasmoidItem {
             Keys.onEscapePressed: panel.close()
 
             QQC2.TextField {
+
+                background: SqField { focused: parent.activeFocus }  // N9: squircle-half ends
+
+                leftPadding: height / 3; rightPadding: height / 3
                 id: search
                 anchors { left: parent.left; right: parent.right; top: parent.top; margins: 4 }
                 height: 40
