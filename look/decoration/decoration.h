@@ -1,4 +1,4 @@
-// The Etesian window decoration (etesian-design explorations/desktop2 XWin.vue, "10 · Window decorations"): one 44 px header
+// The Etesian window decoration (etesian-design src/shell/desktop/ XWin.vue, "10 · Window decorations"): one 44 px header
 // bar per window, the app squircle and the title in the light face on the left, then the app's actions, the app menu (…), a thin
 // divider and minimise / maximise / close; every button gets a squircle on hover (red for close). Inactive windows show the
 // header content at half strength. KDE apps listed in kwinrc [Etesian] HeaderActionApps get their toolbar's actions here and

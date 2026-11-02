@@ -3,7 +3,7 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
   <kcfgfile name="kwinrc"/>
   <group name="Effect-etesian_windows">
-    <!-- Desktop v2 "Touchpad": three fingers down closes the window like the N9 swipe-down; off by default so nobody is surprised. -->
+    <!-- "Touchpad": three fingers down closes the window like the N9 swipe-down; off by default so nobody is surprised. -->
     <entry name="SwipeDownClose" type="Bool"><default>false</default></entry>
   </group>
 </kcfg>

@@ -1,5 +1,5 @@
-// Generates the Etesian window decoration (an Aurorae theme) after the Desktop v2 window (etesian-design
-// src/stories/explorations/desktop2/XWin.vue): a 44 px header bar in the chrome gradient, rounded top corners, the title in
+// Generates the Etesian window decoration (an Aurorae theme) after the Etesian desktop window (etesian-design
+// src/shell/desktop/XWindow.vue): a 44 px header bar in the chrome gradient, rounded top corners, the title in
 // the light face on the left, and minimise / maximise / close as glyphs that get a squircle on hover (red for close).
 // Usage: node --experimental-strip-types scripts/aurorae.ts  ->  look/aurorae/Etesian/
 

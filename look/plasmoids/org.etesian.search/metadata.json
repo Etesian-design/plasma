@@ -1,8 +1,8 @@
 {
   "KPackageStructure": "Plasma/Applet",
   "KPlugin": {
-    "Id": "org.etesian.spotlight",
-    "Name": "Etesian spotlight",
+    "Id": "org.etesian.search",
+    "Name": "Etesian search",
     "Description": "Super+Space: a compact search over the windows for apps, people, mail and files",
     "Icon": "view-app-grid-symbolic",
     "Category": "Application Launchers",

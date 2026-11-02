@@ -1,4 +1,4 @@
-// The snap-layout picker card (etesian-design explorations/desktop2/XLayoutPicker.vue): 640 px, the six layouts three per row,
+// The snap-layout picker card (etesian-design src/shell/desktop/XLayoutPicker.vue): 640 px, the six layouts three per row,
 // numbered. Shared by the drag overlay (etesian-snap script) and the Super+Z picker (etesian_snaplayouts effect); keep both copies equal.
 import QtQuick
 

@@ -1,5 +1,5 @@
 /*
- * The first item of the Desktop v2 menu bar (XMenuBar.vue .x-mbar__app): the focused app's name in bold, then the app menus
+ * The first item of the Etesian desktop menu bar (XMenuBar.vue .x-mbar__app): the focused app's name in bold, then the app menus
  * follow (the Global Menu widget). With no window focused it says "Desktop".
  */
 import QtQuick

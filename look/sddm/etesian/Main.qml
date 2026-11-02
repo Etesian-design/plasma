@@ -1,4 +1,4 @@
-// The Etesian login screen (SDDM, Qt 6). The Desktop v2 background; the time large in the light face with the day and date,
+// The Etesian login screen (SDDM, Qt 6). The Etesian desktop background; the time large in the light face with the day and date,
 // as in Events; the user as a lit squircle (their picture, or initials); a password field; Enter logs in. Below: the session
 // and power buttons as squircles. Fira Sans (SIL OFL, fonts/OFL-FiraSans.txt); no Nokia fonts.
 import QtQuick

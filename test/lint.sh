@@ -10,7 +10,7 @@ for f in EventsView.qml Weather.qml Feeds.qml SharedSettings.qml Agenda.qml Squi
   cmp -s "$p/org.etesian.events/contents/ui/$f" "$p/org.etesian.launcher/contents/ui/$f" || { echo "FAIL lint: $f differs between org.etesian.events and org.etesian.launcher"; exit 1; }
 done
 for f in Search.qml etesianicons.js Squircle.qml; do
-  cmp -s "$p/org.etesian.launcher/contents/ui/$f" "$p/org.etesian.spotlight/contents/ui/$f" || { echo "FAIL lint: $f differs between org.etesian.launcher and org.etesian.spotlight"; exit 1; }
+  cmp -s "$p/org.etesian.launcher/contents/ui/$f" "$p/org.etesian.search/contents/ui/$f" || { echo "FAIL lint: $f differs between org.etesian.launcher and org.etesian.search"; exit 1; }
 done
 for f in Feeds.qml SharedSettings.qml; do
   cmp -s "$p/org.etesian.events/contents/ui/$f" "$p/org.etesian.feed/contents/ui/$f" || { echo "FAIL lint: $f differs between org.etesian.events and org.etesian.feed"; exit 1; }

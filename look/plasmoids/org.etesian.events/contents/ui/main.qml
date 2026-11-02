@@ -1,5 +1,5 @@
 /*
- * Desktop v2 Events (etesian-design explorations/desktop2/XEventsPanel.vue, XMenuBar.vue .x-mbar__events).
+ * Etesian Events (etesian-design src/shell/desktop/XEventsPanel.vue, XMenuBar.vue .x-mbar__events).
  * In the menu bar: the count of new notifications in the accent bubble. Clicked, or Super+N: the phone's Events view
  * (EventsView.qml, also the Overview's left column) drops in under the bar on the right, 460 px wide. No toggles and no volume
  * here: they live in the status menu.

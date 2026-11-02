@@ -1,5 +1,5 @@
 /*
- * Desktop v2 snapping (etesian-design explorations/desktop2: geometry.ts, XZones.vue, XLayoutPicker.vue, states "drag", "snapped").
+ * Etesian snapping (etesian-design src/shell/desktop/: geometry.ts, XZones.vue, XLayoutPicker.vue, states "drag", "snapped").
  * - Dragging a window shows the numbered zones of the current layout as cards; releasing over one snaps the window into it.
  * - Dragging to the top edge drops the layout picker (six layouts); releasing over a zone of any layout snaps there.
  *   Super+Z opens the same picker from the keyboard: that one is the etesian_snaplayouts effect (effects get the keyboard).
