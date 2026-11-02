@@ -13,7 +13,7 @@
 <p align="center">
   <a href="https://etesian-design.com/desktop">Try it in your browser</a> ·
   <a href="https://etesian-design.com">Website</a> ·
-  <a href="https://github.com/etesian-design/design">Design</a> ·
+  <a href="https://language.etesian-design.com">Design language</a> ·
   <a href="https://github.com/etesian-design/android_vendor_etesian">Phone</a>
 </p>
 
