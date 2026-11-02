@@ -1,5 +1,5 @@
 /*
- * The spotlight (Super+Space): a compact panel centred near the top of the screen, over the windows: a search field, the
+ * Search (Super+Space): a compact panel centred near the top of the screen, over the windows: a search field, the
  * app grid (6 columns of 64 px squircles) and, while typing, people, mail, files and more from Plasma's search runners.
  * Enter opens the first match, Esc or Super+Space again closes it. It is an addition to the Overview (Super, the main menu;
  * org.etesian.launcher), not a replacement. The widget has nothing to show in the bar: only the shortcut opens it.

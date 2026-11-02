@@ -1,5 +1,5 @@
 /*
- * Super+Z (etesian-design explorations/desktop2/XLayoutPicker.vue): the snap-layout picker for the active window, at the top
+ * Super+Z (etesian-design src/shell/desktop/XLayoutPicker.vue): the snap-layout picker for the active window, at the top
  * of its screen. 1-6 picks a layout and then a number its zone, or click a zone; Esc or a click elsewhere closes it.
  * It is an effect rather than part of the etesian-snap script because effects get the keyboard. Zones follow geometry.ts
  * zoneRects() exactly as the script does.

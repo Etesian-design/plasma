@@ -1,4 +1,4 @@
-"""The Etesian wallpaper: the Desktop v2 background (etesian-design desktop/XDesktop.vue .x-desktop): black (--hd-surface-home)
+"""The Etesian wallpaper: the Etesian desktop background (etesian-design desktop/XDesktop.vue .x-desktop): black (--hd-surface-home)
 with the accent (#4591FF) glowing at 22 % in a 1200 x 700 ellipse at 70 % / 30 % (of 1920 x 1080), fading out by 70 % of it.
 Lightly dithered so the gradient does not band.  python3 scripts/wallpaper.py  ->  look/wallpapers/Etesian/
 """

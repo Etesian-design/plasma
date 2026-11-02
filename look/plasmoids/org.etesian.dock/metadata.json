@@ -3,7 +3,7 @@
   "KPlugin": {
     "Id": "org.etesian.dock",
     "Name": "Etesian dock",
-    "Description": "The Desktop v2 dock: launcher | pinned and running apps as squircles | recycle bin",
+    "Description": "The Etesian desktop dock: launcher | pinned and running apps as squircles | recycle bin",
     "Icon": "user-desktop",
     "Category": "Windows and Tasks",
     "License": "MIT",

@@ -1,5 +1,5 @@
 /*
- * The Desktop v2 status menu (etesian-design explorations/desktop2/XStatusPanel.vue, XMenuBar.vue .x-mbar__sicons).
+ * The Etesian desktop status menu (etesian-design src/shell/desktop/XStatusPanel.vue, XMenuBar.vue .x-mbar__sicons).
  * In the menu bar: the Wi-Fi, Bluetooth and battery icons with the charge. A click drops the menu, separate from Events:
  * Wi-Fi, Bluetooth, Silent and Focus toggles, volume and brightness, then the battery and Settings.
  * Each part comes from a different Plasma module, some of them private; every part is loaded on its own, so a module that is

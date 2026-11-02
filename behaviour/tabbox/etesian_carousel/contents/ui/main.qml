@@ -1,5 +1,5 @@
 /*
- * The Desktop v2 Windows view as a KWin window switcher (etesian-design explorations/desktop2/XWindows.vue).
+ * The Etesian desktop Windows view as a KWin window switcher (etesian-design src/shell/desktop/XWindows.vue).
  * Super+Tab shows the open windows as live cards on a dark scrim: level 1 is the carousel (one large card, its neighbours
  * at the sides), and Down / Up while Super is held zooms out to 2, 3 or 4 cards per row and back.
  * Tab / Shift+Tab and the wheel move, releasing Super switches (KWin does that part: a window switcher never receives the

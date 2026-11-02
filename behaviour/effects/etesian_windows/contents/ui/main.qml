@@ -1,9 +1,9 @@
 /*
- * The Desktop v2 Windows view (etesian-design explorations/desktop2/XWindows.vue, DesktopV2.vue) as a KWin effect.
+ * The Etesian desktop Windows view (etesian-design src/shell/desktop/XWindows.vue, DesktopV2.vue) as a KWin effect.
  * Super+Tab opens the carousel (one large card) with the next window selected; while Super is held, Tab / Shift+Tab move and
  * releasing Super switches. Super+wheel (or a three-finger pinch) zooms between the phone's levels, carousel, 2, 3, 4 per row,
  * and locks the view: it then stays open as a task viewer until a window is picked or Esc.
- * Touchpad (Desktop v2 "Touchpad"): three fingers sideways minimise the window, and switch windows when none is left in front;
+ * Touchpad ("Touchpad"): three fingers sideways minimise the window, and switch windows when none is left in front;
  * three fingers down close the window, only when SwipeDownClose is switched on (off by default).
  */
 import QtQuick

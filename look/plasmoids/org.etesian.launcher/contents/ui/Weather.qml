@@ -32,7 +32,7 @@ Item {
     }
     function refresh() {
         if (!cfg.weatherCity) return
-        get("https://api.open-meteo.com/v1/forecast?latitude=" + cfg.weatherLat + "&longitude=" + cfg.weatherLon + "&current=temperature_2m,weather_code",
+        get(cfg.forecaster + "/v1/forecast?latitude=" + cfg.weatherLat + "&longitude=" + cfg.weatherLon + "&current=temperature_2m,weather_code",
             j => { temp = j.current.temperature_2m; code = j.current.weather_code })
     }
     /** the place picker's matches (up to 10, as on the phone): name, "region, country", where it is */
@@ -49,6 +49,7 @@ Item {
     function choose(m) { cfg.setCity(m.name, m.lat, m.lon); editing = false; matches = []; refresh() }
     Component.onCompleted: refresh()
     Connections { target: wx.cfg; function onWeatherLonChanged() { wx.refresh() } } // the shared settings load after start
+    Connections { target: wx.cfg; function onForecasterChanged() { wx.refresh() } } // and a self-hosted forecast after the place
     Timer { interval: 30 * 60 * 1000; running: !!wx.cfg.weatherCity; repeat: true; onTriggered: wx.refresh() }
 
     Row {

@@ -1,4 +1,4 @@
-# Keyboard snapping into three columns (Desktop v2 "Snapped"): Super+Left/Right between columns, Super+Up maximises,
+# Keyboard snapping into three columns ("Snapped"): Super+Left/Right between columns, Super+Up maximises,
 # Super+Down floats the window again at its old size. Zones are computed here independently of the script under test.
 source /src/test/check.sh
 kate /src/README.md >/out/kate.log 2>&1 & sleep 4

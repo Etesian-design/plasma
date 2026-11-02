@@ -26,6 +26,8 @@ mkdir -p "$data/sounds" "$data/wallpapers" && rm -rf "$data/sounds/Etesian" "$da
 cp -r "$here/look/sounds/Etesian" "$data/sounds/" && cp -r "$here/look/cursors/Etesian-cursors" "$data/icons/" && cp -r "$here/look/wallpapers/Etesian" "$data/wallpapers/"
 kwriteconfig6 --file kdeglobals --group Sounds --key Theme Etesian
 kwriteconfig6 --file kcminputrc --group Mouse --key cursorTheme Etesian-cursors
+# Search was once called org.etesian.spotlight: the old copy goes.
+rm -rf "$data/plasma/plasmoids/org.etesian.spotlight"
 mkdir -p "$data/plasma/plasmoids" && cp -r "$here/look/plasmoids/"* "$data/plasma/plasmoids/"
 mkdir -p "$data/kwin/tabbox" && cp -r "$here/behaviour/tabbox/etesian_carousel" "$data/kwin/tabbox/"
 mkdir -p "$data/kwin/scripts" && cp -r "$here/behaviour/scripts/etesian-snap" "$data/kwin/scripts/"
@@ -106,7 +108,7 @@ else
 fi
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft M
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight IAX
-# The header bar is the only border (Desktop v2 windows have none); resizing still works from the invisible edges.
+# The header bar is the only border (Etesian windows have none); resizing still works from the invisible edges.
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key BorderSize None
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key BorderSizeAuto false
 # Behaviour. Super+Tab is the Etesian Windows view (an effect: carousel while Super is held, Super+wheel zooms and keeps it

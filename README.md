@@ -1,12 +1,13 @@
 <p align="center">
-  <img src=".github/readme/windows-carousel.png" width="820" alt="Super+Tab: open windows as a carousel, one large card at a time">
+  <img src=".github/readme/overview.png" width="860" alt="The Overview: Events on the left, the open windows in the middle, the apps on the right">
 </p>
 
 <h1 align="center">Etesian for KDE Plasma</h1>
 
 <p align="center">
-  <b>The Nokia N9's look and feel, on your Linux desktop.</b><br>
-  A global menu bar, a floating dock, the N9's carousel of open windows, and its Events view one keypress away.
+  <b>A calm, gesture-first desktop for KDE Plasma.</b><br>
+  One Overview for everything new, your open windows and your apps; a global menu bar, a floating dock and a carousel of
+  open windows. Its influence is the Nokia N9's Swipe UI, re-envisioned for the desktop.
 </p>
 
 <p align="center">
@@ -30,18 +31,36 @@ back.
 
 <table>
   <tr>
-    <td><img src=".github/readme/overview.png" alt="The Overview: Events, open windows and apps"></td>
-    <td><img src=".github/readme/events-open.png" alt="Events: notifications, calendar and feeds"></td>
+    <td><img src=".github/readme/overview-search.webp" alt="Tapping Super opens the Overview; typing searches at once"></td>
+    <td><img src=".github/readme/windows.webp" alt="Super+Tab steps through the open windows as a carousel; scrolling shows three per row"></td>
   </tr>
   <tr>
-    <td align="center"><b>Overview</b>: tap Super, start typing</td>
-    <td align="center"><b>Events</b>: notifications, calendar and feeds</td>
+    <td align="center"><b>Overview</b>: tap Super, just start typing</td>
+    <td align="center"><b>Windows</b>: Super+Tab, then scroll for a grid</td>
+  </tr>
+  <tr>
+    <td><img src=".github/readme/events.png" alt="Events beside the windows: notifications, weather, calendar and feeds"></td>
+    <td><img src=".github/readme/snap-layouts.png" alt="Snap layouts: six arrangements, picked by number"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Events</b>: Super+N, everything new in one list</td>
+    <td align="center"><b>Snap layouts</b>: Super+Z, or drag a window to the top</td>
+  </tr>
+  <tr>
+    <td><img src=".github/readme/desktop.png" alt="The desktop: the menu bar, the floating dock and window headers with the app's own actions"></td>
+    <td><img src=".github/readme/windows-grid.png" alt="All open windows, three per row"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>The desktop</b>: menu bar, dock, one row of chrome</td>
+    <td align="center"><b>Every window at once</b>: pick one or press Esc</td>
   </tr>
 </table>
 
+The pictures come from `test/run.sh showcase` and `scripts/readme-anim.py`, in a throwaway Plasma container.
+
 ## Highlights
 
-- **Windows, the N9 way.** Super+Tab shows one large card at a time; scroll to see 2, 3 or 4 per row.
+- **Windows as a carousel.** Super+Tab shows one large card at a time; scroll to see 2, 3 or 4 per row.
 - **Snapping that shows you where.** Drag a window and numbered zones appear. Drag it to the top for six layouts.
 - **One place for what's new.** Events gathers notifications, today's calendar, your RSS feeds and the weather.
 - **Window headers with the app's own actions.** Kate's New, Open and Save sit in the title bar, so a window has one

@@ -1,12 +1,12 @@
 /*
- * The Overview, the main menu (etesian-design explorations/desktop/DesktopWorkspace.vue, Desktop v1 A, kept by Desktop v2).
+ * The Overview, the main menu (etesian-design src/shell/parts/XOverview.vue).
  * In the dock: the accent squircle with the grid glyph, first item. Tapping Super (Plasma's launcher key) or clicking it opens
  * the full-screen Overview under the menu bar, in the N9 home order:
  *   the phone's Events view on the left (the same as the Events sidebar: date, time and weather, notifications, calendar, feeds),
  *   the open windows as live pictures in the middle (two per row, a close squircle on hover, no title), and the apps on the right
  *   (type to search, 5 columns of 54 px squircles).
  * Typing goes to the search; Tab moves between the columns, the arrows within one, Enter opens, Ctrl+W closes the picked window,
- * Esc or Super closes the Overview. The compact search panel is a separate addition: Super+Space (org.etesian.spotlight).
+ * Esc or Super closes the Overview. The compact search panel is a separate addition: Super+Space (org.etesian.search).
  */
 import QtQuick
 import QtQuick.Controls as QQC2

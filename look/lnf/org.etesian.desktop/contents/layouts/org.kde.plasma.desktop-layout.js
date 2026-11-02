@@ -1,4 +1,4 @@
-// The Desktop v2 layout (etesian-design explorations/desktop2): a slim global menu bar on top (app menus on the left,
+// The Etesian desktop layout (etesian-design src/shell/desktop): a slim global menu bar on top (app menus on the left,
 // tray and clock on the right) and a floating icon dock on the left: launcher | apps | trash, all one Etesian dock widget.
 const top = new Panel
 top.location = "top"
@@ -9,9 +9,9 @@ top.addWidget("org.kde.plasma.appmenu")
 top.addWidget("org.kde.plasma.panelspacer")
 const events = top.addWidget("org.etesian.events")
 events.globalShortcut = "Meta+N"
-// Super+Space: the spotlight search (an addition; Super itself opens the Overview, the dock's first widget)
-const spotlight = top.addWidget("org.etesian.spotlight")
-spotlight.globalShortcut = "Meta+Space"
+// Super+Space: Search, the compact search (an addition; Super itself opens the Overview, the dock's first widget)
+const search = top.addWidget("org.etesian.search")
+search.globalShortcut = "Meta+Space"
 // The tray keeps other apps' icons; Wi-Fi, Bluetooth, battery and volume live in the Etesian status menu instead, and
 // notifications in Events (the notifications applet stays loaded, hidden, because it draws the pop-ups).
 const tray = top.addWidget("org.kde.plasma.systemtray")

@@ -1,5 +1,5 @@
 /*
- * The Desktop v2 dock (etesian-design explorations/desktop2/XDock.vue, XDockSettings.vue), after the launcher widget:
+ * The Etesian desktop dock (etesian-design src/shell/desktop/XDock.vue, XDockSettings.vue), after the launcher widget:
  * separator | pinned and running apps | separator | recycle bin, always last. Every item is a squircle: each app a lit squircle
  * in its icon's own colour with the icon on it, the bin a faint squircle. Running apps get a small dot on the screen-edge side,
  * the active one a larger accent dot. Hover and the active app get the pressed squircle behind them.
@@ -228,7 +228,7 @@ PlasmoidItem {
         }
     }
 
-    // Edit dock banner, top centre (DesktopV2 .x-editbanner).
+    // Edit dock banner, top centre (the design tour .x-editbanner).
     PlasmaCore.Dialog {
         id: banner
         visible: root.editing
