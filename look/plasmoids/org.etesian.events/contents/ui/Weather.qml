@@ -75,6 +75,8 @@ Item {
         }
     }
     QQC2.TextField {
+        background: SqField { focused: parent.activeFocus }  // N9: squircle-half ends
+        leftPadding: height / 3; rightPadding: height / 3
         id: field
         visible: wx.editing
         anchors.verticalCenter: parent.verticalCenter; width: 220

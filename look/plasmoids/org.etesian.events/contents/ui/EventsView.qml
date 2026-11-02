@@ -157,6 +157,8 @@ Item {
                     }
                 }
                 QQC2.TextField {
+                    background: SqField { focused: parent.activeFocus }  // N9: squircle-half ends
+                    leftPadding: height / 3; rightPadding: height / 3
                     Layout.fillWidth: true; Layout.leftMargin: 16; Layout.rightMargin: 16; Layout.topMargin: 6
                     placeholderText: feeds.list.length ? "Add another feed (RSS or Atom address)" : "Add a feed: paste an RSS or Atom address"
                     onAccepted: {

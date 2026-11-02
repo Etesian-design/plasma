@@ -235,6 +235,8 @@ PlasmoidItem {
                 x: parent.width - 600; width: 600; height: parent.height
                 Rectangle { width: 1; height: parent.height; color: root.divider }
                 QQC2.TextField {
+                    background: SqField { focused: parent.activeFocus }  // N9: squircle-half ends
+                    leftPadding: height / 3; rightPadding: height / 3
                     id: search
                     x: 24; y: 24; width: parent.width - 48; height: 40
                     placeholderText: "Type to search apps, contacts, mail"
