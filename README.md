@@ -25,6 +25,8 @@
 
 ---
 
+This repository is the Etesian look and behaviour for KDE Plasma, one of the platforms of the Etesian design language.
+
 Not a theme pack. Etesian changes how Plasma **works** as well as how it looks: the way you switch windows, snap them,
 find apps and catch up on what's new. It installs for your user only, needs no root, and one command puts everything
 back.
@@ -152,6 +154,12 @@ test/lint.sh              # quick QML checks, no Docker
 ```
 
 The tests need a GPU render node (`/dev/dri/renderD128`, or set `DRI_NODE`).
+
+## Related projects
+
+The [design language](https://github.com/etesian-design/design) this is built from, the
+[phone](https://github.com/etesian-design/android_vendor_etesian) (any LineageOS phone) and
+[the website](https://github.com/etesian-design/website).
 
 ## Licence
 
