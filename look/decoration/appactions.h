@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QList>
 #include <QString>
+#include <QTimer>
 #include <optional>
 
 struct AppAction {
@@ -35,4 +36,9 @@ private:
     QString m_service, m_path;
     QList<AppAction> m_actions;
     std::optional<bool> m_toolBarHidden; // unknown until the first call, which is always sent
+    // The app's window can reach D-Bus after its menu: the toolbar state is sent again until one window has taken it.
+    void applyToolBar();
+    QTimer m_retry;
+    int m_tries = 0;
+    bool m_applied = false;
 };

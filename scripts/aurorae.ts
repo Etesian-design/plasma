@@ -1,5 +1,5 @@
 // Generates the Etesian window decoration (an Aurorae theme) after the Etesian desktop window (etesian-design
-// src/shell/desktop/XWindow.vue): a 44 px header bar in the chrome gradient, rounded top corners, the title in
+// src/shell/desktop/XWindow.vue): a 44 px header bar in the chrome gradient, squircle top corners, the title in
 // the light face on the left, and minimise / maximise / close as glyphs that get a squircle on hover (red for close).
 // Usage: node --experimental-strip-types scripts/aurorae.ts  ->  look/aurorae/Etesian/
 
@@ -9,7 +9,16 @@ import { join } from 'node:path'
 const out = join(import.meta.dirname, '../look/aurorae/Etesian')
 mkdirSync(out, { recursive: true })
 
-const BAR = 44, R = 8 // header height and corner radius (XWin: 44px, --hd-radius-card)
+const BAR = 44, R = 24 // header height and the corner tile: a squircle corner (n = 2.8) this wide, the design's card-corner token
+/** A quarter squircle filling an R x R tile from its bottom-left (left corner) or top-left (right corner), as SVG path points: left from (0, R) to (R, 0), right from (R, R) to (0, 0). */
+function corner(right: boolean): string {
+  const pts: string[] = []
+  for (let i = 0; i <= 24; i++) {
+    const t = Math.PI + (i * Math.PI / 2) / 24, c = Math.abs(Math.cos(t)) ** (2 / 2.8), s = Math.abs(Math.sin(t)) ** (2 / 2.8)
+    pts.push(right ? `${(R * c).toFixed(2)},${(R - R * s).toFixed(2)}` : `${(R - R * c).toFixed(2)},${(R - R * s).toFixed(2)}`)
+  }
+  return pts.join('L')
+}
 const FROM = '#3A3A3A', TO = '#141414' // --hd-c-toolbar-from / -to (dark chrome)
 const IN_FROM = '#4A4A4A', IN_TO = '#2E2E2E' // unfocused: the bar fades towards the page (XWin :not(.is-focused))
 const BTN = 30, SQ = 26 // button box and its squircle (XWin .x-win__ctl)
@@ -31,9 +40,9 @@ function frame(prefix: string, from: string, to: string) {
   const g = `${prefix}g`
   const part = (name: string, x: number, d: string) => `<path id="${prefix}${name}" d="${d}" fill="url(#${g})" transform="translate(${x} 0)"/>`
   return `<linearGradient id="${g}" x1="0" y1="0" x2="0" y2="${BAR}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${from}"/><stop offset="1" stop-color="${to}"/></linearGradient>
-  ${part('topleft', 0, `M0,${R}a${R},${R} 0 0 1 ${R},-${R}v${R}Z`)}
+  ${part('topleft', 0, `M${corner(false)}L${R},${R}Z`)}
   ${part('top', R, `M0,0h${R}v${R}h-${R}Z`)}
-  ${part('topright', 2 * R, `M0,0a${R},${R} 0 0 1 ${R},${R}h-${R}Z`)}
+  ${part('topright', 2 * R, `M${corner(true).split('L').reverse().join('L')}L0,${R}Z`)}
   ${part('left', 0, `M0,${R}h${R}v${BAR - R}h-${R}Z`)}
   ${part('center', R, `M0,${R}h${R}v${BAR - R}h-${R}Z`)}
   ${part('right', 2 * R, `M0,${R}h${R}v${BAR - R}h-${R}Z`)}`

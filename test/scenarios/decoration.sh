@@ -4,9 +4,14 @@ expect "decoration plugin chosen" "$(cfg kwinrc org.kde.kdecoration2 library)" o
 expect_has "KWin loaded the Etesian decoration" "$(qdbus6 org.kde.KWin /KWin supportInformation | grep -i 'Plugin:' | head -n 1)" org.etesian.decoration
 # Installing again while KWin has the plugin loaded must not touch the loaded library (an in-place copy crashed KWin).
 /src/install.sh >/out/install-again.log 2>&1
-kate /src/README.md >/out/kate.log 2>&1 & sleep 7
+kate /src/README.md >/out/kate.log 2>&1 &
+# Kate is up when its main window is on D-Bus; the decoration then moves its toolbar into the header (it retries until
+# the window takes it), so wait for that state rather than a fixed time.
+kate_svc() { qdbus6 | grep -i 'org.kde.kate' | head -n 1 | tr -d ' '; }
+toolbar_hidden() { s=$(kate_svc); [ -n "$s" ] && [ "$(qdbus6 "$s" /kate/MainWindow_1 org.kde.kate.KXmlGuiWindow.isToolBarVisible mainToolBar)" = false ] && echo true; }
+wait_for 30 toolbar_hidden
 expect "KWin survives a reinstall and the next window" "$(pgrep -c kwin_wayland)" 1
-svc=$(qdbus6 | grep -i 'org.kde.kate' | head -n 1 | tr -d ' ')
+svc=$(kate_svc)
 expect "Kate's own toolbar is hidden (its actions are in the header)" "$(qdbus6 "$svc" /kate/MainWindow_1 org.kde.kate.KXmlGuiWindow.isToolBarVisible mainToolBar)" false
 expect "Kate's hamburger row is hidden too (the header's … is the app menu)" "$(qdbus6 "$svc" /kate/MainWindow_1 org.kde.kate.KXmlGuiWindow.isToolBarVisible hamburgerBar)" false
 keys "sleep 0.5" "shot decoration-kate"
@@ -17,7 +22,9 @@ keys "move $nx $ny" "sleep 0.6" "shot decoration-hover" "click" "sleep 1.5"
 expect_has "the header's New button ran Kate's New" "$(active_caption)" Untitled
 # HeaderActions off: a new Kate window gets its own toolbar back.
 kwriteconfig6 --file kwinrc --group Etesian --key HeaderActions false
-kate -n >/out/kate2.log 2>&1 & sleep 7
+kate -n >/out/kate2.log 2>&1 &
+kate2_up() { s=$(qdbus6 | grep -i 'org.kde.kate' | grep -v "$svc" | head -n 1 | tr -d ' '); [ -n "$s" ] && qdbus6 "$s" /kate/MainWindow_1 >/dev/null 2>&1 && echo true; }
+wait_for 30 kate2_up; sleep 1 # the decoration's retries stop at once when HeaderActions is off; give it one pass
 svc2=$(qdbus6 | grep -i 'org.kde.kate' | grep -v "$svc" | head -n 1 | tr -d ' ')
 expect "HeaderActions=false: Kate keeps its toolbar" "$(qdbus6 "$svc2" /kate/MainWindow_1 org.kde.kate.KXmlGuiWindow.isToolBarVisible mainToolBar)" true
 keys "sleep 0.5" "shot decoration-off"

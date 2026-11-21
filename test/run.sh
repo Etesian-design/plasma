@@ -2,10 +2,11 @@
 # Runs a test scenario in a throwaway Plasma container: test/run.sh <scenario> [ubuntu]. Screenshots land in test/out/.
 # Needs Docker and a GPU render node (/dev/dri/renderD128): without OpenGL, KWin cannot take screenshots.
 set -e
+trap 'echo "run.sh: failed at line $LINENO: $BASH_COMMAND" >&2' ERR
 cd "$(dirname "$0")/.."
 scenario="${1:?scenario name, see test/scenarios}"; distro="${2:-ubuntu}"
 image="etesian-plasma-test:$distro"
-docker build -q -t "$image" -f "test/Dockerfile.$distro" test >/dev/null
+docker build -q -t "$image" -f "test/Dockerfile.$distro" test >/dev/null || { echo "run.sh: the $distro image did not build" >&2; docker build -t "$image" -f "test/Dockerfile.$distro" test 2>&1 | tail -20; exit 1; }
 mkdir -p test/out && chmod 777 test/out
 docker run --rm -v "$PWD/test/out:/out" "$image" sh -c 'rm -f /out/*' # files from the last run are owned by the container user
 # The native decoration, built once per distro (incremental after that) into test/build-<distro>; the session installs it from there.

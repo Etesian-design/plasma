@@ -15,7 +15,8 @@ K_PLUGIN_FACTORY_WITH_JSON(EtesianDecorationFactory, "metadata.json", registerPl
 
 namespace Etesian
 {
-static constexpr qreal HEADER = 44, BUTTON = 30, BUTTON_TOP = 7, EDGE = 4, SPACER = 10, RADIUS = 8, ICON = 22;
+static constexpr qreal HEADER = 44, BUTTON = 30, BUTTON_TOP = 7, EDGE = 4, SPACER = 10, RADIUS = 8, ICON = 22,
+    CORNER = 24; // the design's card-corner token: squircle corners (n = 2.8) this wide, the look of the 8 px card radius
 static const QColor RED(0xDA, 0x20, 0x1E), RED_PRESSED(0xA8, 0x15, 0x0F);
 
 /** A squircle (superellipse, n = 2.8 as measured on N9 icons: every side curves), the shape of every thumb-sized icon and button highlight in the Etesian look. */
@@ -28,6 +29,30 @@ static QPainterPath squircle(const QRectF &r)
         const QPointF pt(cx + a * (c < 0 ? -1 : 1) * qPow(qAbs(c), 2 / 2.8), cy + b * (s < 0 ? -1 : 1) * qPow(qAbs(s), 2 / 2.8));
         i ? p.lineTo(pt) : p.moveTo(pt);
     }
+    p.closeSubpath();
+    return p;
+}
+
+/** A window's top corners as the design draws a card's: each a quarter squircle (n = 2.8) CORNER wide, never a circular arc. */
+static QPainterPath topSquircleBar(qreal w, qreal h, qreal c)
+{
+    QPainterPath p;
+    p.moveTo(0, h);
+    if (c <= 0) {
+        p.lineTo(0, 0);
+        p.lineTo(w, 0);
+    } else {
+        // left corner: from (0, c) up to (c, 0) around the centre (c, c); the right one mirrored
+        for (int i = 0; i <= 24; ++i) {
+            const qreal t = M_PI + i * (M_PI / 2) / 24, cs = qCos(t), sn = qSin(t);
+            p.lineTo(c - c * qPow(qAbs(cs), 2 / 2.8), c - c * qPow(qAbs(sn), 2 / 2.8));
+        }
+        for (int i = 0; i <= 24; ++i) {
+            const qreal t = 1.5 * M_PI + i * (M_PI / 2) / 24, cs = qCos(t), sn = qSin(t);
+            p.lineTo(w - c + c * qPow(qAbs(cs), 2 / 2.8), c - c * qPow(qAbs(sn), 2 / 2.8));
+        }
+    }
+    p.lineTo(w, h);
     p.closeSubpath();
     return p;
 }
@@ -160,6 +185,10 @@ void Decoration::relayout()
         m_actionGroup->setPos(QPointF(x, BUTTON_TOP));
     }
     m_titleRight = x - 8;
+    // the bottom corners: KWin rounds the window's content there (it only does circular corners), as the design's 8 px card
+    // radius; the top ones are the header's own squircle corners
+    const bool max = window()->isMaximized();
+    setBorderRadius(KDecoration3::BorderRadius(0, 0, max ? 0 : RADIUS, max ? 0 : RADIUS));
     update();
 }
 
@@ -172,19 +201,11 @@ void Decoration::paint(QPainter *painter, const QRectF &repaintArea)
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing);
 
-    // the header: the chrome surface, lit from the top; rounded top corners unless maximised
+    // the header: the chrome surface, lit from the top; squircle top corners unless maximised
     QLinearGradient g(0, 0, 0, HEADER);
     g.setColorAt(0, active ? QColor(0x3A, 0x3A, 0x3A) : QColor(0x2A, 0x2A, 0x2A));
     g.setColorAt(1, active ? QColor(0x14, 0x14, 0x14) : QColor(0x1E, 0x1E, 0x1E));
-    QPainterPath shape;
-    const qreal r = max ? 0 : RADIUS;
-    shape.moveTo(0, HEADER);
-    shape.lineTo(0, r);
-    shape.arcTo(QRectF(0, 0, 2 * r, 2 * r), 180, -90);
-    shape.lineTo(bar.width() - r, 0);
-    shape.arcTo(QRectF(bar.width() - 2 * r, 0, 2 * r, 2 * r), 90, -90);
-    shape.lineTo(bar.width(), HEADER);
-    shape.closeSubpath();
+    const QPainterPath shape = topSquircleBar(bar.width(), HEADER, max ? 0 : CORNER);
     painter->fillPath(shape, g);
 
     // inactive windows: header content at half strength

@@ -30,6 +30,8 @@ void AppActions::setMenu(const QString &service, const QString &path)
     m_service = service;
     m_path = path;
     m_toolBarHidden.reset();
+    m_applied = false;
+    m_retry.stop();
     m_actions.clear();
     if (service.isEmpty() || path.isEmpty()) { Q_EMIT changed(); return; }
     bus.connect(service, path, iface, QStringLiteral("LayoutUpdated"), this, SLOT(refresh()));
@@ -103,6 +105,22 @@ void AppActions::setToolBarHidden(bool hidden)
 {
     if (m_service.isEmpty() || m_toolBarHidden == hidden) return;
     m_toolBarHidden = hidden;
+    m_applied = false;
+    m_tries = 0;
+    applyToolBar();
+}
+
+void AppActions::applyToolBar()
+{
+    if (m_service.isEmpty() || !m_toolBarHidden || m_applied) { m_retry.stop(); return; }
+    // no window has taken it yet: ask again in half a second, for up to 15 s (a busy session can be that slow to start an app)
+    if (++m_tries > 30) { m_retry.stop(); return; }
+    if (!m_retry.isActive()) {
+        m_retry.setInterval(500);
+        connect(&m_retry, &QTimer::timeout, this, &AppActions::applyToolBar, Qt::UniqueConnection);
+        m_retry.start();
+    }
+    const bool hidden = *m_toolBarHidden;
     // The app's main windows are /<app>/MainWindow_<n>; the interface is <app's D-Bus domain>.KXmlGuiWindow. Every window of
     // the app gets the same state (KDE apps keep one toolbar setting per app anyway). All calls are asynchronous: KWin never waits.
     const QString service = m_service;
@@ -114,7 +132,7 @@ void AppActions::setToolBarHidden(bool hidden)
                 static const QRegularExpression win(QStringLiteral("<node name=\"(MainWindow_\\d+)\""));
                 for (auto mw = win.globalMatch(xml); mw.hasNext();) {
                     const QString path = app + QLatin1Char('/') + mw.next().captured(1);
-                    introspect(this, service, path, [service, path, hidden](const QString &winXml) {
+                    introspect(this, service, path, [this, service, path, hidden](const QString &winXml) {
                         static const QRegularExpression ifc(QStringLiteral("<interface name=\"([^\"]+\\.KXmlGuiWindow)\""));
                         const auto mi = ifc.match(winXml);
                         if (!mi.hasMatch()) return;
@@ -122,12 +140,16 @@ void AppActions::setToolBarHidden(bool hidden)
                         const QString iface = mi.captured(1);
                         auto get = QDBusMessage::createMethodCall(service, path, QStringLiteral("org.freedesktop.DBus.Properties"), QStringLiteral("Get"));
                         get << iface << QStringLiteral("toolBars");
-                        auto *w = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(get));
-                        QObject::connect(w, &QDBusPendingCallWatcher::finished, w, [w, service, path, iface, hidden] {
+                        auto *w = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(get), this);
+                        QObject::connect(w, &QDBusPendingCallWatcher::finished, this, [this, w, service, path, iface, hidden] {
                             w->deleteLater();
                             QDBusPendingReply<QDBusVariant> r = *w;
                             if (r.isError()) return;
-                            for (const QString &bar : r.value().variant().toStringList()) {
+                            const QStringList bars = r.value().variant().toStringList();
+                            if (bars.isEmpty() || service != m_service || m_toolBarHidden != hidden) return;
+                            m_applied = true;
+                            m_retry.stop();
+                            for (const QString &bar : bars) {
                                 auto set = QDBusMessage::createMethodCall(service, path, iface, QStringLiteral("setToolBarVisible"));
                                 set << bar << !hidden;
                                 QDBusConnection::sessionBus().asyncCall(set);

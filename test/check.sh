@@ -2,6 +2,8 @@
 # run.sh fails when any line says FAIL.
 expect() { if [ "$2" = "$3" ]; then echo "PASS $1" >>/out/result.txt; else echo "FAIL $1: got '$2', want '$3'" >>/out/result.txt; fi; }
 expect_has() { case "$2" in *"$3"*) echo "PASS $1" >>/out/result.txt ;; *) echo "FAIL $1: '$3' not in '$2'" >>/out/result.txt ;; esac; }
+# wait_for <seconds> <command...>: runs the command every half second until it prints "true", or the time runs out
+wait_for() { local n=$(( $1 * 2 )); shift; while [ $n -gt 0 ]; do [ "$("$@" 2>/dev/null)" = true ] && return 0; sleep 0.5; n=$((n - 1)); done; return 1; }
 cfg() { kreadconfig6 --file "$1" --group "$2" --key "$3"; }
 # Evaluate a Plasma desktop script in the running shell and return what it prints.
 plasma_eval() { qdbus6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "$1"; }
