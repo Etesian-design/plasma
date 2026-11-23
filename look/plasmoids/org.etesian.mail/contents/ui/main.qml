@@ -55,7 +55,7 @@ PlasmoidItem {
                 visible: !mails.count; anchors { fill: parent; margins: 14 }
                 wrapMode: Text.Wrap; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 color: "#6A6A6A"; font.pixelSize: 15
-                text: src.missing || (!root.inbox.available ? "No mail account yet. Add one in KMail." : "No mails in the inbox.")
+                text: src.missing || (!root.inbox.available ? "No mail account yet. Add one in " + src.app + "." : "No mails in the inbox.")
             }
             ListView {
                 id: mails

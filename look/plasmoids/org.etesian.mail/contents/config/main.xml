@@ -3,9 +3,9 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
   <kcfgfile name=""/>
   <group name="General">
-    <!-- where the mails come from: kmail (Akonadi); more sources later -->
-    <entry name="source" type="String"><default>kmail</default></entry>
-    <!-- one account (an Akonadi resource id), or empty for every inbox -->
+    <!-- where the mails come from: auto (Thunderbird when it has an account, else KMail), thunderbird, kmail -->
+    <entry name="source" type="String"><default>auto</default></entry>
+    <!-- one account (Thunderbird: its folder, as ImapMail/imap.example.org; KMail: an Akonadi resource id), or empty for every inbox -->
     <entry name="account" type="String"><default></default></entry>
   </group>
 </kcfg>
