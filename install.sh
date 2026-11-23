@@ -56,6 +56,20 @@ kwriteconfig6 --file ksplashrc --group KSplash --key Engine KSplashQML
 changeicons=$(ls /usr/lib/x86_64-linux-gnu/libexec/plasma-changeicons /usr/lib64/libexec/plasma-changeicons /usr/lib/plasma-changeicons /usr/libexec/plasma-changeicons 2>/dev/null | head -n 1)
 [ -n "$changeicons" ] && "$changeicons" Etesian >/dev/null 2>&1 || true
 kwriteconfig6 --file kdeglobals --group Icons --key Theme Etesian
+# The widget style (look/style: Breeze with the design's buttons, fields, sliders, check boxes, radio buttons and progress bars)
+# for Qt apps, when it can be built (here, or in Docker); otherwise Breeze. It needs only Qt Widgets, whose plugin interface
+# holds across Qt 6, so a Plasma update does not make it stale. Running apps pick it up when next started.
+style="${ETESIAN_STYLE_SO:-$here/look/style/build/etesian.so}"
+[ -f "$style" ] || "$here/look/style/build.sh" >/dev/null 2>&1 || true
+if [ -f "$style" ]; then
+  mkdir -p "$HOME/.local/lib/qt6/plugins/styles" "$HOME/.config/plasma-workspace/env"
+  cp "$style" "$HOME/.local/lib/qt6/plugins/styles/.etesian.so.new" && mv -f "$HOME/.local/lib/qt6/plugins/styles/.etesian.so.new" "$HOME/.local/lib/qt6/plugins/styles/etesian.so"
+  cp "$here/look/decoration/env.sh" "$HOME/.config/plasma-workspace/env/etesian-plugins.sh" # the plugin path, at login
+  kwriteconfig6 --file kdeglobals --group KDE --key widgetStyle Etesian
+else
+  echo "note: the widget style could not be built (needs cmake + qt6-base-dev, or Docker); apps keep Breeze's controls."
+  kwriteconfig6 --file kdeglobals --group KDE --key widgetStyle Breeze
+fi
 # The window decoration: the native Etesian one (look/decoration: the header bar, with a KDE app's toolbar actions in it) when
 # it can be built (here, or in Docker); otherwise the Aurorae theme, which draws the same header bar without app actions.
 # The plugin lives in ~/.local/lib/qt6/plugins; Plasma's env script adds that to the plugin path at login.
@@ -99,7 +113,7 @@ for tb in "$HOME/.thunderbird" "$HOME/.var/app/org.mozilla.Thunderbird/.thunderb
     [ -d "$dir" ] && mkdir -p "$dir/extensions" && python3 "$here/look/thunderbird/pack.py" "$dir/extensions/theme@etesian-design.com.xpi" 2>/dev/null || true
   done
 done
-# The mail plugin (look/mail): the KMail inboxes behind the Belle Mail widget, built here or in Docker when it is not built yet.
+# The mail plugin (look/mail): the Thunderbird and KMail inboxes behind the Belle Mail widget, built here or in Docker when it is not built yet.
 # It lives in ~/.local/lib/qt6/qml; Plasma's env script adds that to the QML path at login. Without it the widget says so.
 mail="${ETESIAN_MAIL_DIR:-$here/look/mail/build/org/etesian/mail}"
 [ -f "$mail/qmldir" ] || "$here/look/mail/build.sh" >/dev/null 2>&1 || true
@@ -109,7 +123,7 @@ if [ -f "$mail/qmldir" ]; then
   rm -rf "$qml/.mail.new" && cp -r "$mail" "$qml/.mail.new" && rm -rf "$qml/mail" && mv "$qml/.mail.new" "$qml/mail"
   cp "$here/look/mail/env.sh" "$HOME/.config/plasma-workspace/env/etesian-qml.sh"
 else
-  echo "note: the mail plugin could not be built (needs cmake + the Akonadi development files, or Docker); the Mail widget cannot show KMail's mails."
+  echo "note: the mail plugin could not be built (needs cmake + qt6-declarative-dev, and the Akonadi development files for KMail; or Docker); the Mail widget cannot show mails."
 fi
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnLeft M
 kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key ButtonsOnRight IAX

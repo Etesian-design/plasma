@@ -5,7 +5,7 @@ ColorScheme=Etesian
 Theme=Etesian
 
 [kdeglobals][KDE]
-widgetStyle=Breeze
+widgetStyle=Etesian
 
 [plasmarc][Theme]
 name=etesian
