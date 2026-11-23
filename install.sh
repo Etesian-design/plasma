@@ -98,7 +98,40 @@ if deco_ok; then
   kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key theme --delete
   # KDE apps whose toolbar moves into the header (their own toolbar is hidden while the decoration shows it).
   # HeaderActions=false keeps every app's own toolbar (the pure N9 header has no app toolbar either way).
-  [ -n "$(kreadconfig6 --file kwinrc --group Etesian --key HeaderActionApps)" ] || kwriteconfig6 --file kwinrc --group Etesian --key HeaderActionApps "org.kde.kate,org.kde.kwrite"
+  # (the old default, Kate and KWrite only, moves on to the new one; a list the user changed is theirs)
+  case "$(kreadconfig6 --file kwinrc --group Etesian --key HeaderActionApps)" in
+    ""|"org.kde.kate,org.kde.kwrite") kwriteconfig6 --file kwinrc --group Etesian --key HeaderActionApps "org.kde.kate,org.kde.kwrite,org.kde.dolphin,org.kde.okular,org.kde.gwenview" ;;
+  esac
+  # Dolphin keeps its location bar in its toolbar, and hiding the toolbar hid the bar too. Without the bar in the toolbar Dolphin
+  # puts it above the view (as it does when you take it out in Configure Toolbars). This user file holds only the main toolbar
+  # (Dolphin's own, less the location bar) at version 1: KXmlGui then takes Dolphin's own file, newer, for everything else and
+  # keeps this toolbar, after every Dolphin update too. A toolbar you set up yourself is left as it is.
+  rc="$data/kxmlgui5/dolphin/dolphinui.rc"
+  if [ ! -f "$rc" ]; then
+    mkdir -p "${rc%/*}"
+    cat >"$rc" <<'RC'
+<!DOCTYPE gui>
+<gui name="dolphin" version="1">
+ <ToolBar noMerge="1" name="mainToolBar">
+  <text context="@title:menu">Main Toolbar</text>
+  <Action name="go_back"/>
+  <Action name="go_forward"/>
+  <Action name="view_settings"/>
+  <Action name="split_view"/>
+  <Action name="split_stash"/>
+  <Action name="toggle_search"/>
+  <Action name="hamburger_menu"/>
+ </ToolBar>
+</gui>
+RC
+    mkdir -p "$data/etesian" && touch "$data/etesian/dolphin-toolbar" # (uninstall.sh puts the bar back)
+  fi
+  # Okular's page number box is in its toolbar: its Page Bar (page number, previous and next, at the foot) takes its place,
+  # unless you set it yourself
+  if [ -z "$(kreadconfig6 --file okularpartrc --group "Main View" --key ShowBottomBar)" ]; then
+    kwriteconfig6 --file okularpartrc --group "Main View" --key ShowBottomBar true
+    mkdir -p "$data/etesian" && touch "$data/etesian/okular-pagebar"
+  fi
 else
   echo "note: the native decoration could not be built (needs cmake + libkdecorations3-dev, or Docker); using the Aurorae header bar."
   kwriteconfig6 --file kwinrc --group org.kde.kdecoration2 --key library org.kde.kwin.aurorae

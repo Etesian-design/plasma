@@ -112,7 +112,7 @@ bool Decoration::init()
     connect(w, &KDecoration3::DecoratedWindow::widthChanged, this, &Decoration::relayout);
     connect(w, &KDecoration3::DecoratedWindow::maximizedChanged, this, [this] { relayout(); update(); });
     connect(w, &KDecoration3::DecoratedWindow::activeChanged, this, [this] { update(); });
-    connect(w, &KDecoration3::DecoratedWindow::captionChanged, this, [this] { update(); });
+    connect(w, &KDecoration3::DecoratedWindow::captionChanged, this, [this] { updateMenu(); update(); }); // (the caption picks the app's window)
     connect(w, &KDecoration3::DecoratedWindow::iconChanged, this, [this] { update(); });
     connect(w, &KDecoration3::DecoratedWindow::applicationMenuChanged, this, &Decoration::updateMenu);
     connect(w, &KDecoration3::DecoratedWindow::hasApplicationMenuChanged, this, &Decoration::updateMenu);
@@ -128,7 +128,7 @@ bool Decoration::enabled() const
 
 bool Decoration::listed() const
 {
-    const QStringList apps = config().value(QStringLiteral("Etesian/HeaderActionApps"), QStringList{QStringLiteral("org.kde.kate"), QStringLiteral("org.kde.kwrite")}).toStringList();
+    const QStringList apps = config().value(QStringLiteral("Etesian/HeaderActionApps"), QStringList{QStringLiteral("org.kde.kate"), QStringLiteral("org.kde.kwrite"), QStringLiteral("org.kde.dolphin"), QStringLiteral("org.kde.okular"), QStringLiteral("org.kde.gwenview")}).toStringList();
     const QStringList cls = window()->windowClass().split(QLatin1Char(' '), Qt::SkipEmptyParts);
     for (const QString &c : cls)
         if (apps.contains(c, Qt::CaseInsensitive)) return true;
@@ -140,7 +140,7 @@ void Decoration::updateMenu()
     auto *w = window();
     m_appMenu->setVisible(w->hasApplicationMenu());
     // listed apps are always followed: with HeaderActions off they get their own toolbar back (it may have been hidden before)
-    if (w->hasApplicationMenu() && listed()) m_app->setMenu(w->applicationMenuServiceName(), w->applicationMenuObjectPath());
+    if (w->hasApplicationMenu() && listed()) m_app->setMenu(w->applicationMenuServiceName(), w->applicationMenuObjectPath(), w->windowClass(), w->caption());
     else m_app->setMenu(QString(), QString());
     relayout();
 }
@@ -155,6 +155,8 @@ void Decoration::rebuildActions()
     for (const AppAction &a : list) {
         auto *b = new Button(KDecoration3::DecorationButtonType::Custom, this, m_actionGroup, a.icon);
         b->setEnabled(a.enabled);
+        b->setCheckable(a.checkable); // a toggle (Dolphin's split view, search): on shows a resting squircle
+        b->setChecked(a.checked);
         const int id = a.id;
         const QString tip = a.label;
         connect(b, &KDecoration3::DecorationButton::clicked, m_app, [this, id] { m_app->trigger(id); });
@@ -257,9 +259,10 @@ void Button::paint(QPainter *painter, const QRectF &repaintArea)
     painter->setOpacity(active ? 1.0 : 0.5);
     const bool close = type() == KDecoration3::DecorationButtonType::Close;
     // the hover / pressed highlight: a squircle (red for close)
-    if (isEnabled() && (isHovered() || isPressed())) {
+    const bool toggledOn = type() == KDecoration3::DecorationButtonType::Custom && isChecked();
+    if (isEnabled() && (isHovered() || isPressed() || toggledOn)) {
         const QRectF s = QRectF(0, 0, 26, 26).translated(g.center() - QPointF(13, 13));
-        painter->fillPath(squircle(s), close ? (isPressed() ? RED_PRESSED : RED) : QColor(255, 255, 255, isPressed() ? 61 : 41));
+        painter->fillPath(squircle(s), close ? (isPressed() ? RED_PRESSED : RED) : QColor(255, 255, 255, isPressed() ? 61 : toggledOn && !isHovered() ? 31 : 41));
     }
     QPen pen(Qt::white, 1.8, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(pen);

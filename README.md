@@ -129,7 +129,7 @@ On a touchpad: pinch with three fingers to zoom the windows view, swipe sideways
 
 In `~/.config/kwinrc`:
 
-- `[Etesian] HeaderActionApps` lists the apps whose toolbar moves into the header (default: Kate, KWrite);
+- `[Etesian] HeaderActionApps` lists the apps whose toolbar moves into the header (default: Kate, KWrite, Dolphin, Okular, Gwenview; their toolbar's buttons, while widgets such as Dolphin's location bar stay in the app);
   `HeaderActions=false` turns it off.
 - `[Effect-etesian_windows] SwipeDownClose=true` lets a three-finger swipe down close a window.
 

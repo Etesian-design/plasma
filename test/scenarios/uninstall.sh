@@ -10,7 +10,13 @@ xpi=~/.thunderbird/abc.default/extensions/theme@etesian-design.com.xpi
 expect "the Thunderbird theme is in the Thunderbird profile" "$(python3 -c "import zipfile, json, sys; print(json.load(zipfile.ZipFile(sys.argv[1]).open('manifest.json'))['browser_specific_settings']['gecko']['id'])" $xpi 2>&1)" theme@etesian-design.com
 expect "the mail plugin is installed" "$(ls ~/.local/lib/qt6/qml/org/etesian/mail/qmldir ~/.config/plasma-workspace/env/etesian-qml.sh 2>/dev/null | wc -l)" 2
 
+expect "installed: Dolphin's toolbar without the location bar (Dolphin puts it above the view)" "$(grep -c url_navigators ~/.local/share/kxmlgui5/dolphin/dolphinui.rc)" 0
+expect "installed: Okular's page bar on" "$(cfg okularpartrc 'Main View' ShowBottomBar)" true
+expect "installed: the widget style" "$(cfg kdeglobals KDE widgetStyle)" Etesian
 /src/uninstall.sh >/out/uninstall.log 2>&1
+expect "Dolphin's location bar is back in its toolbar" "$(grep -c 'name="url_navigators"' ~/.local/share/kxmlgui5/dolphin/dolphinui.rc)" 1
+expect "Okular's page bar setting is gone again" "$(cfg okularpartrc 'Main View' ShowBottomBar)" ""
+expect "the style plugin is gone" "$(ls ~/.local/lib/qt6/plugins/styles/etesian.so 2>/dev/null | wc -l)" 0
 for i in $(seq 40); do qdbus6 org.kde.plasmashell /PlasmaShell >/dev/null 2>&1 && break; sleep 0.5; done; sleep 6
 shot uninstalled
 expect "user's colour scheme back" "$(cfg kdeglobals General ColorScheme)" BreezeDark

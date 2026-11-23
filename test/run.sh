@@ -21,7 +21,9 @@ node="${DRI_NODE:-/dev/dri/renderD128}"
 docker run --rm --name "etesian-plasma-$scenario" --device "$node" --group-add "$(stat -c %g "$node")" \
   -v "$PWD:/src:ro" -v "$PWD/test/out:/out" -v "$PWD/test/build-$distro:/deco:ro" -e ETESIAN_DECORATION_SO=/deco/org.etesian.decoration.so -e ETESIAN_MAIL_DIR=/deco/mail/org/etesian/mail -e ETESIAN_STYLE_SO=/deco/style/etesian.so -e KWIN_GDB -e DEBUGINFOD_URLS -e TZ "$image" timeout 300 /src/test/session.sh "$scenario" || rc=$?
 # a scenario that stopped early (an error, a crash, the timeout) must not pass on the checks it reached
-case ${rc:-0} in 0) ;; 124) echo "FAIL the scenario ran past 300 s and was stopped" >>test/out/result.txt ;;
-  *) echo "FAIL the scenario stopped early (exit ${rc}): see the output above" >>test/out/result.txt ;; esac
+# (result.txt belongs to the container's user, so the note is printed with it rather than added to it)
+case ${rc:-0} in 0) early= ;; 124) early="FAIL the scenario ran past 300 s and was stopped" ;;
+  *) early="FAIL the scenario stopped early (exit ${rc}): see the output above" ;; esac
 cat test/out/result.txt
+[ -z "$early" ] || { echo "$early"; exit 1; }
 ! grep -q ^FAIL test/out/result.txt

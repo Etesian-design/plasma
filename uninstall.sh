@@ -10,10 +10,22 @@ data="${XDG_DATA_HOME:-$HOME/.local/share}"
 . "$here/settings.sh"
 backup="$data/etesian/backup"
 remove_files() {
-  rm -rf "$data/plasma/plasmoids/org.etesian."* "$data/kwin/scripts/etesian-snap" "$data/kwin/effects/etesian_windows" "$data/kwin/effects/etesian_snaplayouts" "$data/kwin/tabbox/etesian_carousel" "$data/aurorae/themes/Etesian" "$data/plasma/desktoptheme/etesian" "$data/plasma/look-and-feel/org.etesian.desktop" "$data/icons/Etesian" "$HOME/.local/lib/qt6/plugins/org.kde.kdecoration3/org.etesian.decoration.so" "$HOME/.config/plasma-workspace/env/etesian-plugins.sh" "$HOME/.local/lib/qt6/qml/org/etesian/mail" "$HOME/.config/plasma-workspace/env/etesian-qml.sh" "$data/sounds/Etesian" "$data/icons/Etesian-cursors" "$data/wallpapers/Etesian"
+  rm -rf "$data/plasma/plasmoids/org.etesian."* "$data/kwin/scripts/etesian-snap" "$data/kwin/effects/etesian_windows" "$data/kwin/effects/etesian_snaplayouts" "$data/kwin/tabbox/etesian_carousel" "$data/aurorae/themes/Etesian" "$data/plasma/desktoptheme/etesian" "$data/plasma/look-and-feel/org.etesian.desktop" "$data/icons/Etesian" "$HOME/.local/lib/qt6/plugins/org.kde.kdecoration3/org.etesian.decoration.so" "$HOME/.local/lib/qt6/plugins/styles/etesian.so" "$HOME/.config/plasma-workspace/env/etesian-plugins.sh" "$HOME/.local/lib/qt6/qml/org/etesian/mail" "$HOME/.config/plasma-workspace/env/etesian-qml.sh" "$data/sounds/Etesian" "$data/icons/Etesian-cursors" "$data/wallpapers/Etesian"
   # the Thunderbird theme (Thunderbird goes back to its default theme if it was in use)
   rm -f "$HOME"/.thunderbird/*/extensions/theme@etesian-design.com.xpi "$HOME"/.var/app/org.mozilla.Thunderbird/.thunderbird/*/extensions/theme@etesian-design.com.xpi "$HOME"/snap/thunderbird/common/.thunderbird/*/extensions/theme@etesian-design.com.xpi
   rm -f "$data/color-schemes/Etesian.colors" "$data/color-schemes/EtesianDark.colors"
+  [ -f "$data/etesian/okular-pagebar" ] && kwriteconfig6 --file okularpartrc --group "Main View" --key ShowBottomBar --delete
+  # Dolphin's location bar back in its toolbar, when install.sh took it out (the rest of the toolbar stays as you have it)
+  rc="$data/kxmlgui5/dolphin/dolphinui.rc"
+  if [ -f "$data/etesian/dolphin-toolbar" ] && [ -f "$rc" ] && ! grep -q 'name="url_navigators"' "$rc"; then
+    # (after View Settings, where Dolphin has it; KXmlGui writes "<Action ... />"; if you removed that one, first in the toolbar)
+    if grep -q '<Action name="view_settings" */>' "$rc"; then
+      sed -i '/<ToolBar[^>]*name="mainToolBar"/,/<\/ToolBar>/{/<Action name="view_settings" *\/>/a\  <Action name="url_navigators"/>
+}' "$rc"
+    else
+      sed -i '/<ToolBar[^>]*name="mainToolBar"[^>]*>/a\  <Action name="url_navigators"/>' "$rc"
+    fi
+  fi
 }
 
 if [ -d "$backup" ] && [ "$1" != --breeze ]; then
