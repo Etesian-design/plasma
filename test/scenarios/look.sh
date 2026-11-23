@@ -16,7 +16,7 @@ info="$(qdbus6 org.kde.KWin /KWin org.kde.KWin.supportInformation)"
 expect_has "decoration plugin" "$info" "org.etesian.decoration"
 expect "no side borders" "$(cfg kwinrc org.kde.kdecoration2 BorderSize)" None
 expect "icon theme" "$(cfg kdeglobals Icons Theme)" Etesian
-expect "Etesian icons installed" "$(ls ~/.local/share/icons/Etesian/apps/scalable/org.kde.dolphin.svg 2>/dev/null | wc -l)" 1
+expect "Etesian icons installed" "$(ls ~/.local/share/icons/Etesian/apps/scalable/org.kde.dolphin.svgz 2>/dev/null | wc -l)" 1
 panels="$(plasma_eval 'print(panels().map(p => p.location + (p.floating ? "/floating" : "") + ":" + p.widgets().map(w => w.type).join(",")).join(" | "))')"
 expect_has "menu bar on top" "$panels" "top:org.etesian.appname,org.kde.plasma.appmenu,org.kde.plasma.panelspacer,org.etesian.events,org.etesian.search,org.kde.plasma.systemtray,org.etesian.status,org.kde.plasma.digitalclock"
 expect_has "floating Etesian dock on the left" "$panels" "left/floating:org.etesian.launcher,org.etesian.dock"
