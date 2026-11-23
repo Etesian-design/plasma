@@ -9,7 +9,7 @@ kate /src/README.md >/out/kate.log 2>&1 &
 # the window takes it), so wait for that state rather than a fixed time.
 kate_svc() { qdbus6 | grep -i 'org.kde.kate' | head -n 1 | tr -d ' '; }
 toolbar_hidden() { s=$(kate_svc); [ -n "$s" ] && [ "$(qdbus6 "$s" /kate/MainWindow_1 org.kde.kate.KXmlGuiWindow.isToolBarVisible mainToolBar)" = false ] && echo true; }
-wait_for 30 toolbar_hidden
+wait_for 30 toolbar_hidden || { s=$(kate_svc); { echo "svc=$s"; qdbus6 "$s" | grep -v /actions/ | head -40; } >/out/kate-objects.txt 2>&1; }
 expect "KWin survives a reinstall and the next window" "$(pgrep -c kwin_wayland)" 1
 svc=$(kate_svc)
 expect "Kate's own toolbar is hidden (its actions are in the header)" "$(qdbus6 "$svc" /kate/MainWindow_1 org.kde.kate.KXmlGuiWindow.isToolBarVisible mainToolBar)" false

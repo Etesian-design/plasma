@@ -10,9 +10,9 @@ widgetStyle=Etesian
 [plasmarc][Theme]
 name=etesian
 
+# (no library or theme here: install.sh picks the decoration, the native one or its Aurorae stand-in; with one here too, applying
+# this look and feel raced install.sh and could leave KWin on Aurorae)
 [kwinrc][org.kde.kdecoration2]
-library=org.kde.kwin.aurorae
-theme=__aurorae__svg__Etesian
 ButtonsOnLeft=M
 ButtonsOnRight=IAX
 BorderSize=None
